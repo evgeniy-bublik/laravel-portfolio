@@ -1,0 +1,50 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 22/10/2017 07:51
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("../fonts/Flaticon.eot");
+  src: url("../fonts/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/Flaticon.woff") format("woff"),
+       url("../fonts/Flaticon.ttf") format("truetype"),
+       url("../fonts/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("../fonts/Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-shapes:before { content: "\f100"; }
+.flaticon-agenda-1:before { content: "\f101"; }
+.flaticon-agenda:before { content: "\f102"; }
+.flaticon-location:before { content: "\f103"; }
+.flaticon-calendar-with-spring-binder-and-date-blocks:before { content: "\f104"; }
+.flaticon-social:before { content: "\f105"; }
+.flaticon-e-mail-envelope:before { content: "\f106"; }
+.flaticon-technology:before { content: "\f107"; }
+.flaticon-placeholder:before { content: "\f108"; }
+.flaticon-science:before { content: "\f109"; }
+.flaticon-tool:before { content: "\f10a"; }
+.flaticon-diamond:before { content: "\f10b"; }
+.flaticon-photo-camera:before { content: "\f10c"; }
+.flaticon-magic-wand:before { content: "\f10d"; }
+.flaticon-vector:before { content: "\f10e"; }
+.flaticon-light-bulb:before { content: "\f10f"; }
+.flaticon-layers:before { content: "\f110"; }
+.flaticon-cube-of-notes-stack:before { content: "\f111"; }
+.flaticon-anchor:before { content: "\f112"; }
