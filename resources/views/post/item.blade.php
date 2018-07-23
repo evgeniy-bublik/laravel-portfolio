@@ -68,14 +68,14 @@
                                                 <div class="overlay">
                                                     <div class="inner-box">
                                                         <div class="content">
-                                                            <a href="{{ route('articles.item') }}"><i class="fa fa-link"></i></a>
+                                                            <a href="{{ route('posts.item') }}"><i class="fa fa-link"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="lower-content">
-                                            <div class="title"><a href="{{ route('articles.item') }}">DESIGNS THAT CHANGED THE WORLD FOR GOOD</a></div>
+                                            <div class="title"><a href="{{ route('posts.item') }}">DESIGNS THAT CHANGED THE WORLD FOR GOOD</a></div>
                                             <div class="text">
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ...</p>
                                             </div>
@@ -99,14 +99,14 @@
                                                 <div class="overlay">
                                                     <div class="inner-box">
                                                         <div class="content">
-                                                            <a href="{{ route('articles.item') }}"><i class="fa fa-link"></i></a>
+                                                            <a href="{{ route('posts.item') }}"><i class="fa fa-link"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="lower-content">
-                                            <div class="title"><a href="{{ route('articles.item') }}">DESIGNS THAT CHANGED THE WORLD FOR GOOD</a></div>
+                                            <div class="title"><a href="{{ route('posts.item') }}">DESIGNS THAT CHANGED THE WORLD FOR GOOD</a></div>
                                             <div class="text">
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ...</p>
                                             </div>

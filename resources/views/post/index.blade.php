@@ -25,14 +25,14 @@
                                     <div class="overlay">
                                         <div class="inner-box">
                                             <div class="content">
-                                                <a href="{{ route('articles.item') }}"><i class="fa fa-link"></i></a>
+                                                <a href="{{ route('posts.item') }}"><i class="fa fa-link"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="lower-content">
-                                <div class="title"><a href="{{ route('articles.item') }}">DESIGNS THAT CHANGED THE WORLD FOR GOOD</a></div>
+                                <div class="title"><a href="{{ route('posts.item') }}">DESIGNS THAT CHANGED THE WORLD FOR GOOD</a></div>
                                 <div class="text">
                                     <p>Alienum phaedrum torquatos nec eu, vis detraxit periculis ex, nihil expetendis in mei. Mei an pericula euripidis, hinc partem ei est. Eos ei nisl graecis, vix aperiri consequat an. </p>
                                 </div>
@@ -58,14 +58,14 @@
                                     <div class="overlay">
                                         <div class="inner-box">
                                             <div class="content">
-                                                <a href="{{ route('articles.item') }}"><i class="fa fa-link"></i></a>
+                                                <a href="{{ route('posts.item') }}"><i class="fa fa-link"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="lower-content">
-                                <div class="title"><a href="{{ route('articles.item') }}">ASPECT RATIO AND LIGHTENING IN PHOTO PRESENTATIONS</a></div>
+                                <div class="title"><a href="{{ route('posts.item') }}">ASPECT RATIO AND LIGHTENING IN PHOTO PRESENTATIONS</a></div>
                                 <div class="text">
                                     <p>Alienum phaedrum torquatos nec eu, vis detraxit periculis ex, nihil expetendis in mei. Mei an pericula euripidis, hinc partem ei est. Eos ei nisl graecis, vix aperiri consequat an. </p>
                                 </div>
@@ -91,14 +91,14 @@
                                     <div class="overlay">
                                         <div class="inner-box">
                                             <div class="content">
-                                                <a href="{{ route('articles.item') }}"><i class="fa fa-link"></i></a>
+                                                <a href="{{ route('posts.item') }}"><i class="fa fa-link"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="lower-content">
-                                <div class="title"><a href="{{ route('articles.item') }}">Professional level of Animation to Branding</a></div>
+                                <div class="title"><a href="{{ route('posts.item') }}">Professional level of Animation to Branding</a></div>
                                 <div class="text">
                                     <p>Alienum phaedrum torquatos nec eu, vis detraxit periculis ex, nihil expetendis in mei. Mei an pericula euripidis, hinc partem ei est. Eos ei nisl graecis, vix aperiri consequat an. </p>
                                 </div>
@@ -124,14 +124,14 @@
                                     <div class="overlay">
                                         <div class="inner-box">
                                             <div class="content">
-                                                <a href="{{ route('articles.item') }}"><i class="fa fa-link"></i></a>
+                                                <a href="{{ route('posts.item') }}"><i class="fa fa-link"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="lower-content">
-                                <div class="title"><a href="{{ route('articles.item') }}">Recognizing the need is the primary for design.</a></div>
+                                <div class="title"><a href="{{ route('posts.item') }}">Recognizing the need is the primary for design.</a></div>
                                 <div class="text">
                                     <p>Alienum phaedrum torquatos nec eu, vis detraxit periculis ex, nihil expetendis in mei. Mei an pericula euripidis, hinc partem ei est. Eos ei nisl graecis, vix aperiri consequat an. </p>
                                 </div>

@@ -20,7 +20,7 @@
                         <ul class="navigation clearfix">
                             <li><a href="{{ route('index') }}">Главная</a></li>
                             <li><a href="{{ route('portfolio.index') }}">Портфолио</a></li>
-                            <li><a href="{{ route('articles.index') }}">Блог</a></li>
+                            <li><a href="{{ route('posts.index') }}">Блог</a></li>
                             <li><a href="{{ route('contacts') }}">Контакты</a>
                             </li>
                         </ul>
@@ -54,7 +54,7 @@
                         <ul class="navigation clearfix">
                             <li><a href="{{ route('index') }}">Главная</a></li>
                             <li><a href="{{ route('portfolio.index') }}">Портфолио</a></li>
-                            <li><a href="{{ route('articles.index') }}">Блог</a></li>
+                            <li><a href="{{ route('posts.index') }}">Блог</a></li>
                             <li><a href="{{ route('contacts') }}">Контакты</a>
                             </li>
                         </ul>

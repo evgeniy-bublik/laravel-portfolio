@@ -76,7 +76,7 @@
                         <ul class="list">
                             <li><a href="{{ route('portfolio.index') }}">Портфолио</a></li>
                             <li><a href="{{ route('contacts') }}">Контакты</a></li>
-                            <li><a href="{{ route('articles.index') }}">Блог</a></li>
+                            <li><a href="{{ route('posts.index') }}">Блог</a></li>
                         </ul>
                     </div>
                 </div>

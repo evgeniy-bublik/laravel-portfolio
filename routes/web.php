@@ -19,15 +19,13 @@ Route::get('/contacts', function() {
     return view('contacts');
 })->name('contacts');
 
-Route::group(['prefix' => '/articles'], function() {
+Route::group(['prefix' => '/posts'], function() {
 
-    Route::get('/', function() {
-        return view('articles.index');
-    })->name('articles.index');
+    Route::get('/', 'Post\PostController@index')->name('posts.index');
 
     Route::get('/item', function() {
-        return view('articles.article');
-    })->name('articles.item');
+        return view('post.item');
+    })->name('posts.item');
 
 });
 
