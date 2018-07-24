@@ -90,22 +90,20 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et d magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea co consequat. Duis aute irure dolor in reprehenderit in.</p>
                         </div>
                         <div class="progress-content">
-                            <div class="progress-item">
-                                <div class="progress-text">Design</div>
-                                <div class="progress" data-value="80">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="value-holder"><span class="value"></span>%</div>
+
+                            @foreach ($professionalSkills as $skill)
+
+                                <div class="progress-item">
+                                    <div class="progress-text">{{ $skill->name }}</div>
+                                    <div class="progress" data-value="{{ $skill->value }}">
+                                        <div class="progress-bar" style="background-color: {{ $skill->color_bar }}" role="progressbar" aria-valuenow="{{ $skill->value }}" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="value-holder"><span class="value"></span>%</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="progress-item">
-                                <div class="progress-text">Development</div>
-                                <div class="progress" data-value="65">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="value-holder"><span class="value"></span>%</div>
-                                    </div>
-                                </div>
-                            </div>
+
+                            @endforeach
+
                         </div>
                     </div>
                 </div>

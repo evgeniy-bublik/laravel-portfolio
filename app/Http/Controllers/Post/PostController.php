@@ -9,8 +9,17 @@ use App\Models\Post\Tag;
 use App\Models\Post\Category;
 use App\Models\Post\PostUniqueView;
 
+/**
+ * Post controller.
+ */
 class PostController extends Controller
 {
+    /**
+     * Display page with all posts.
+     *
+     * @param \Illuminate\Http\Request $request Request
+     * @return \Illuminate\Support\Facades\View
+     */
     public function index(Request $request)
     {
         return view('post.index', [
@@ -22,6 +31,13 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Display page single post.
+     *
+     * @param \Illuminate\Http\Request $request Request
+     * @param string $slug Post slug.
+     * @return \Illuminate\Support\Facades\View
+     */
     public function item(Request $request, $slug)
     {
         $post = Post::where('slug', $slug)->visible()->active()->with(['tags' => function($query) { return $query->active(); }, 'comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->firstOrFail();
@@ -45,6 +61,13 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Display page with posts by category.
+     *
+     * @param \Illuminate\Http\Request $request Request
+     * @param string $categorySlug Category slug.
+     * @return \Illuminate\Support\Facades\View
+     */
     public function byCategory(Request $request, $categorySlug)
     {
         $category = Category::active()->where('slug', $categorySlug)->firstOrFail();
@@ -58,6 +81,13 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Display page with posts by tag.
+     *
+     * @param \Illuminate\Http\Request $request Request
+     * @param string $tagSlug Tag slug.
+     * @return \Illuminate\Support\Facades\View
+     */
     public function byTag(Request $request, $tagSlug)
     {
         $tag = Tag::active()->where('slug', $tagSlug)->firstOrFail();
