@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User\ProfessionalSkill;
+use App\Http\Requests\SupportMessageRequest;
+use App\Models\Support;
 
 /**
  * Index controller.
@@ -21,5 +23,26 @@ class IndexController extends Controller
         return view('index', [
             'professionalSkills' => ProfessionalSkill::active()->orderBy('display_order', 'desc')->get(),
         ]);
+    }
+
+    public function storeSupportMessage(SupportMessageRequest $request)
+    {
+        $response = [
+            'status' => false,
+            'content' => view('modals.base_content', [
+                'modalBodyText' => 'Произошла ошибка, попробуйте позже',
+                'modalHeaderText' => 'Ошибка',
+            ])->render(),
+        ];
+
+        if (Support::create($request->all())) {
+            $response[ 'status' ] = true;
+            $response[ 'content' ] = view('modals.base_content', [
+                'modalBodyText' => 'Ваша заявка в обработке, пожалуйста ожидайте ответа',
+                'modalHeaderText' => 'Успешно отправлено',
+            ])->render();
+        }
+
+        return response()->json($response);
     }
 }

@@ -294,22 +294,22 @@
                 <div class="sec-title"><h2>Написать мне</h2></div>
             </div>
             <div class="subscribe-form">
-                <form id="contact-form" name="contact_form" class="default-form" action="" method="post">
+                <form id="contact-form" name="contact_form" class="default-form" action="{{ route('supports.send') }}" method="post">
                     <div class="row">
                         <div class="col-md-4 col-sm-12 col-xs-12">
-                            <input type="text" name="form_name" value="" placeholder="Ваше имя" required="">
+                            <input type="text" name="name" value="" placeholder="Ваше имя" required="">
                         </div>
                         <div class="col-md-4 col-sm-12 col-xs-12">
-                            <input type="email" name="form_email" value="" placeholder="Ваш email" required="">
+                            <input type="email" name="email" value="" placeholder="Ваш email" required="">
                         </div>
                         <div class="col-md-4 col-sm-12 col-xs-12">
-                            <input type="text" name="form_phone" value="" placeholder="Сайт" required="">
+                            <input type="text" name="site" value="" placeholder="Сайт" required="">
                         </div>
                         <div class="colo-md-12 col-sm-12 col-xs-12">
-                            <input type="text" name="form_subject" value="" placeholder="Тема" required="">
+                            <input type="text" name="subject" value="" placeholder="Тема" required="">
                         </div>
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <textarea placeholder="Ваше сообщение" name="form_message" required=""></textarea>
+                            <textarea placeholder="Ваше сообщение" name="text" required=""></textarea>
                         </div>
                     </div>
                     <div class="subscribe-btn centred">

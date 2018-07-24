@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Ryazan | Responsive HTML 5 Template</title>
     <!-- Stylesheets -->
     <link href="/css/style.css" rel="stylesheet">
@@ -70,6 +71,15 @@
 
     <!--Scroll to top-->
     <div class="scroll-to-top scroll-to-target" data-target=".main-header"><span class="icon fa fa-angle-up"></span></div>
+
+    <div id="dynamic-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
     <!--jquery js -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -84,6 +94,7 @@
     <!-- revolution -->
     <script src="/js/revolution.min.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/main.js"></script>
     <!-- End of .page_wrapper -->
 
     @yield('js')
