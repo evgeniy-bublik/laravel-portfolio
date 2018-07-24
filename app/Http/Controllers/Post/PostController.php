@@ -23,10 +23,10 @@ class PostController extends Controller
     public function index(Request $request)
     {
         return view('post.index', [
-            'posts' => Post::visible()->active()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
+            'posts' => Post::visible()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
             'listTags' => Tag::active()->get(),
             'activeTagId' => 0,
-            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible()->active(); }])->get(),
+            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
             'activeCategoryId' => 0,
         ]);
     }
@@ -40,7 +40,7 @@ class PostController extends Controller
      */
     public function item(Request $request, $slug)
     {
-        $post = Post::where('slug', $slug)->visible()->active()->with(['tags' => function($query) { return $query->active(); }, 'comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->firstOrFail();
+        $post = Post::where('slug', $slug)->visible()()->with(['tags' => function($query) { return $query->active(); }, 'comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->firstOrFail();
 
         $post->increment('total_views');
 
@@ -57,7 +57,7 @@ class PostController extends Controller
 
         return view('post.item', [
             'post' => $post,
-            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible()->active(); }])->get(),
+            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
         ]);
     }
 
@@ -73,10 +73,10 @@ class PostController extends Controller
         $category = Category::active()->where('slug', $categorySlug)->firstOrFail();
 
         return view('post.index', [
-            'posts' => $category->posts()->visible()->active()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
+            'posts' => $category->posts()->visible()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
             'listTags' => Tag::active()->get(),
             'activeTagId' => 0,
-            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible()->active(); }])->get(),
+            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
             'activeCategoryId' => $category->id,
         ]);
     }
@@ -93,10 +93,10 @@ class PostController extends Controller
         $tag = Tag::active()->where('slug', $tagSlug)->firstOrFail();
 
         return view('post.index', [
-            'posts' => $tag->posts()->visible()->active()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
+            'posts' => $tag->posts()->visible()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
             'listTags' => Tag::active()->get(),
             'activeTagId' => $tag->id,
-            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible()->active(); }])->get(),
+            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
             'activeCategoryId' => 0,
         ]);
     }

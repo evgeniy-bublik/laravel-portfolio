@@ -26,14 +26,15 @@ class Post extends Model
     const LIMIT_POSTS_ON_PAGE = 15;
 
     /**
-     * Scope for get visible posts by date.
+     * Scope for get visible posts.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeVisible(Builder $builder)
     {
-        return $builder->where('date', '<=', date('Y-m-d H:i:s'));
+        return $builder->visibleByDate()
+            ->active();
     }
 
     /**
@@ -46,6 +47,30 @@ class Post extends Model
     {
         return $builder->where('active', 1);
     }
+
+    /**
+     * Scope for get visible posts by date.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeVisibleByDate(Builder $builder)
+    {
+        return $builder->where('date', '<=', date('Y-m-d H:i:s'));
+    }
+
+    /**
+     * Scope for get latest visible posts.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLatestNews(Builder $builder, $limit = 2)
+    {
+        return $builder->visibleByDate()
+            ->limit($limit);
+    }
+
 
     /**
      * Get hunam format post date.
