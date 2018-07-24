@@ -5,7 +5,7 @@
                 <div class="col-md-3 col-sm-6 col-xs-12 footer-column">
                     <div class="logo-wideget footer-wideget">
                         <div class="footer-logo">
-                            <a href="index.html">
+                            <a href="{{ route('index') }}">
                                 <figure><img src="/images/footer/footer-logo.png" alt=""></figure>
                             </a>
                         </div>

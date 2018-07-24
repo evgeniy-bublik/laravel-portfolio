@@ -47,7 +47,7 @@
 
                     @foreach (json_decode($aboutMe[ 'phones' ]) as $phone)
 
-                        <div class="text">{{ $phone }}</div>
+                        <div class="text"><a href="callto:{{ $phone }}">{{ $phone }}</a></div>
 
                     @endforeach
 
@@ -57,7 +57,7 @@
 
                     @foreach (json_decode($aboutMe[ 'emails' ]) as $email)
 
-                        <div class="text">{{ $email }}</div>
+                        <div class="text"><a href="mailto:{{ $email }}">{{ $email }}</a></div>
 
                     @endforeach
 

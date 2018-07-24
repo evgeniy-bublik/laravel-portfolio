@@ -2,7 +2,7 @@
 <footer class="footer-style-two centred">
     <div class="container">
         <div class="logo-box">
-            <a href="index.html">
+            <a href="{{ route('index') }}">
                 <figure><img src="/images/footer/footer-logo.png" alt=""></figure>
             </a>
         </div>
