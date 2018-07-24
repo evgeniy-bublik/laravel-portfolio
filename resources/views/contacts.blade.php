@@ -58,38 +58,8 @@
         </div>
     </section>
     <!-- google map end -->
-    <!-- contact section -->
-    <section class="contact-section">
-        <div class="container">
-            <div class="sec-title centred">
-                <h2>Keep In Touch</h2></div>
-            <div class="form-area">
-                <form id="contact-form" name="contact_form" class="default-form" action="inc/sendmail.php" method="post">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12 col-xs-12">
-                            <input type="text" name="form_name" value="" placeholder="Your Name" required="">
-                        </div>
-                        <div class="col-md-4 col-sm-12 col-xs-12">
-                            <input type="email" name="form_email" value="" placeholder="Your Email" required="">
-                        </div>
-                        <div class="col-md-4 col-sm-12 col-xs-12">
-                            <input type="text" name="form_Subject" value="" placeholder="Website" required="">
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <input type="text" name="form_Phone" value="" placeholder="Subject" required="">
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <textarea placeholder="Type Your Message Here . . ." name="form_message" required=""></textarea>
-                        </div>
-                    </div>
-                    <div class="contact-btn centred">
-                        <button type="submit" class="btn-one" data-loading-text="Please wait...">Send Message</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-    <!-- contact section end -->
+
+    @include('contact_form')
 
     @include('layouts.parts.extended_footer')
 
