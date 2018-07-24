@@ -266,7 +266,7 @@ h3 a:hover{
 .link-btn li{
   display: inline-block;margin: 0px 1px;
 }
-.link-btn li a{
+.link-btn li a, .link-btn li span.disabled, .link-btn li.active {
   position: relative;
   display: inline-block;
   font-size: 15px;
@@ -280,8 +280,7 @@ h3 a:hover{
   border-radius: 50%;
   transition: all 500ms ease;
 }
-.link-btn li a:hover,
-.link-btn li a.active{
+.link-btn li a:hover, .link-btn li.active {
   background: #333333;
   color: #fff;
   transition: all 500ms ease;

@@ -22,10 +22,9 @@ Route::get('/contacts', function() {
 Route::group(['prefix' => '/posts'], function() {
 
     Route::get('/', 'Post\PostController@index')->name('posts.index');
-
-    Route::get('/item', function() {
-        return view('post.item');
-    })->name('posts.item');
+    Route::get('/{slug}', 'Post\PostController@item')->name('posts.item');
+    Route::get('/tag/{tagSlug}', 'Post\PostController@byTag')->name('posts.by.tag');
+    Route::get('/category/{categorySlug}', 'Post\PostController@byCategory')->name('posts.by.category');
 
 });
 
