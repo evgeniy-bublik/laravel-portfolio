@@ -32,9 +32,9 @@
                                 <div class="bottom-content">
                                     <ul class="meta">
                                         <li class="img-box">
-                                            <figure><img src="/images/news/3.png" alt=""></figure>
+                                            <figure><img src="{{ $aboutMe[ 'link_photo_for_posts' ]}}" alt=""></figure>
                                         </li>
-                                        <li>Евгений Бублик </li>
+                                        <li>{{ $aboutMe[ 'first_name' ] }} {{ $aboutMe[ 'last_name' ] }}</li>
                                         <li>{{ $post->humanDate }}</li>
                                     </ul>
                                     <ul class="meta meta-right">
@@ -91,9 +91,9 @@
                                             <div class="bottom-content">
                                                 <ul class="meta">
                                                     <li class="img-box">
-                                                        <figure><img src="/images/news/1.png" alt=""></figure>
+                                                        <figure><img src="{{ $aboutMe[ 'link_photo_for_posts' ]}}" alt=""></figure>
                                                     </li>
-                                                    <li>Евгений Бублик</li>
+                                                    <li>{{ $aboutMe[ 'first_name' ] }} {{ $aboutMe[ 'last_name' ] }}</li>
                                                     <li>{{ $relatedPost->humanDate }}</li>
                                                 </ul>
                                             </div>
@@ -111,15 +111,16 @@
                                 <div class="blog-title-text"><h4>Оставленных комментариев [ {{ $post->comments_count }} ]</h4></div>
 
                                 @foreach ($post->comments as $comment)
-                                <div class="single-comment">
-                                    <div class="comment-img">
-                                        <figure><img src="/images/news/c1.png" alt=""></figure>
-                                    </div>
-                                    <div class="title">{{ $comment->user_name }}</div>
-                                    <div class="time">{{ $comment->humanDate }}</div>
-                                    <div class="text">
-                                        <p>{{ $comment->text }}</p>
-                                    </div>
+
+                                    <div class="single-comment">
+                                        <div class="comment-img">
+                                            <figure><img src="/images/news/c1.png" alt=""></figure>
+                                        </div>
+                                        <div class="title">{{ $comment->user_name }}</div>
+                                        <div class="time">{{ $comment->humanDate }}</div>
+                                        <div class="text">
+                                            <p>{{ $comment->text }}</p>
+                                        </div>
                                 </div>
 
                                 @endforeach
@@ -130,20 +131,20 @@
 
                         <div class="comment-form">
                             <div class="blog-title-text">
-                                <h4>Leave a reply</h4></div>
+                                <h4>Оставить комментарий</h4></div>
                             <form id="contact-form" name="contact_form" class="default-form" action="inc/sendmail.php" method="post">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" name="form_name" value="" placeholder="Name" required="">
+                                        <input type="text" name="form_name" value="" placeholder="Имя" required="">
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="email" name="form_email" value="" placeholder="Email" required="">
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <textarea placeholder="Message" name="form_message" required=""></textarea>
+                                        <textarea placeholder="Текст" name="form_message" required=""></textarea>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn-one" data-loading-text="Please wait...">SEND YOUR MESSAGE</button>
+                                <button type="submit" class="btn-one" data-loading-text="Please wait...">Оставить</button>
                             </form>
                         </div>
                     </div>

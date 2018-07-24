@@ -10,29 +10,39 @@
                             </a>
                         </div>
                         <div class="text">Nulla ut ex tempor, volutpat quam sed, mattis nibh. Maecenas a ultrices ante. Integer libero dui, vulputate sed.</div>
-                        <div class="follow">Follow Us :</div>
+                        <div class="follow">Подпишись на меня :</div>
                         <ul class="footer-social">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+
+                            @foreach ($socialLinks as $link)
+
+                                <li><a href="{{ $link->link }}" target="_blank"><i class="{{ $link->additional_classes }}"></i></a></li>
+
+                            @endforeach
+
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 footer-column">
-                    <div class="update-wideget footer-wideget">
-                        <div class="footer-title">Latest Updates</div>
-                        <div class="single-box">
-                            <div class="text">Donec malesuada libero vel mi ullam- corper tincidunt. Vivamus.</div>
-                            <div class="comment">5 Comments</div>
-                        </div>
-                        <div class="single-box">
-                            <div class="text">Donec malesuada libero vel mi ullam- corper tincidunt. Vivamus.</div>
-                            <div class="comment">8 Comments</div>
+
+                @if ($latestPosts)
+
+                    <div class="col-md-4 col-sm-6 col-xs-12 footer-column">
+                        <div class="update-wideget footer-wideget">
+                            <div class="footer-title">Последние записи</div>
+
+                            @foreach ($latestPosts as $latestPost)
+
+                                <div class="single-box">
+                                    <div class="text"><a href="{{ route('posts.item', ['slug' => $latestPost->slug]) }}">{{ $latestPost->name }}</a></div>
+                                    <div class="comment">{{ $latestPost->comments_count }} Комментариев</div>
+                                </div>
+
+                            @endforeach
+
                         </div>
                     </div>
-                </div>
+
+                @endif
+
                 <div class="col-md-3 col-sm-6 col-xs-12 footer-column">
                     <div class="gallery-wideget footer-wideget">
                         <div class="footer-title">Photo Gallery</div>

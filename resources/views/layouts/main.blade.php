@@ -31,25 +31,35 @@
             </div>
             <div class="about-hidden-box">
                 <div class="title">
-                    <h4>About Us</h4></div>
-                <div class="text">We must explain to you how all seds this mistakens idea off denouncing pleasures and praising pain was born and I will give you a completed accounts off the system and expound the actually teaching of the great explorer ut of the truth, the master builder of human happiness.</div>
-                <a href="#" class="btn-one btn-bg">More About</a>
+                    <h4>Обо мне</h4></div>
+                <div class="text">{{ $aboutMe[ 'full_about_me' ] }}</div>
             </div>
             <div class="contact-hidden-box">
                 <div class="title">
-                    <h4>Contact Info</h4></div>
+                    <h4>Контактная информация</h4></div>
                 <div class="single-item">
                     <div class="icon-box"><i class="fa fa-map-marker"></i></div>
-                    <div class="text">68 Smithfield Avenue,
-                        <br /> Broadwalk</div>
+                    <div class="text">{{ $aboutMe[ 'location' ] }}</div>
                 </div>
                 <div class="single-item">
                     <div class="icon-box"><i class="fa fa-phone"></i></div>
-                    <div class="text">+ (01) 735 264 9870</div>
+
+                    @foreach (json_decode($aboutMe[ 'phones' ]) as $phone)
+
+                        <div class="text">{{ $phone }}</div>
+
+                    @endforeach
+
                 </div>
                 <div class="single-item">
                     <div class="icon-box"><i class="fa fa-envelope"></i></div>
-                    <div class="text">ryazan@gmail.com</div>
+
+                    @foreach (json_decode($aboutMe[ 'emails' ]) as $email)
+
+                        <div class="text">{{ $email }}</div>
+
+                    @endforeach
+
                 </div>
             </div>
         </div>

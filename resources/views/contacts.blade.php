@@ -19,19 +19,31 @@
                 <div class="col-md-4 col-sm-6 col-xs-12 contact-column">
                     <div class="single-item">
                         <div class="icon-box"><i class="flaticon-placeholder"></i></div>
-                        <div class="text">г. Чернигов</div>
+                        <div class="text">{{ $aboutMe[ 'location' ] }}</div>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12 contact-column">
                     <div class="single-item">
                         <div class="icon-box"><i class="flaticon-technology"></i></div>
-                        <div class="text">+380935994767</div>
+
+                        @foreach (json_decode($aboutMe[ 'phones' ]) as $phone)
+
+                            <div class="text">{{ $phone }}</div>
+
+                        @endforeach
+
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12 contact-column">
                     <div class="single-item">
                         <div class="icon-box"><i class="flaticon-e-mail-envelope"></i></div>
-                        <div class="text">evgeniy.bublik1992@gmail.com</div>
+
+                        @foreach (json_decode($aboutMe[ 'emails' ]) as $email)
+
+                            <div class="text">{{ $email }}</div>
+
+                        @endforeach
+
                     </div>
                 </div>
             </div>

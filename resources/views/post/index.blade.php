@@ -49,9 +49,9 @@
                                 <div class="bottom-content">
                                     <ul class="meta">
                                         <li class="img-box">
-                                            <figure><img src="/images/news/4.png" alt=""></figure>
+                                            <figure><img src="{{ $aboutMe[ 'link_photo_for_posts' ]}}" alt=""></figure>
                                         </li>
-                                        <li>Евгений Бублик</li>
+                                        <li>{{ $aboutMe[ 'first_name' ] }} {{ $aboutMe[ 'last_name' ] }}</li>
                                         <li>{{ $post->humanDate }}</li>
                                     </ul>
                                     <ul class="meta meta-right">

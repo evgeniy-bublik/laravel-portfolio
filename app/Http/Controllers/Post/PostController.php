@@ -40,7 +40,7 @@ class PostController extends Controller
      */
     public function item(Request $request, $slug)
     {
-        $post = Post::where('slug', $slug)->visible()()->with(['tags' => function($query) { return $query->active(); }, 'comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->firstOrFail();
+        $post = Post::where('slug', $slug)->visible()->with(['tags' => function($query) { return $query->active(); }, 'comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->firstOrFail();
 
         $post->increment('total_views');
 

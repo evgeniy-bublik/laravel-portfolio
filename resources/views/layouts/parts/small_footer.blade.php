@@ -7,11 +7,13 @@
             </a>
         </div>
         <ul class="footer-social">
-            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+
+            @foreach ($socialLinks as $link)
+
+                <li><a href="{{ $link->link }}" target="_blank"><i class="{{ $link->additional_classes }}"></i></a></li>
+
+            @endforeach
+
         </ul>
         <div class="copyright">Copyright © 2018 <a href="#">Ryazan</a>. All Rights Reserved</div>
     </div>

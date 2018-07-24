@@ -65,9 +65,11 @@ class Post extends Model
      * @param \Illuminate\Database\Eloquent\Builder $builder
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeLatestNews(Builder $builder, $limit = 2)
+    public function scopeLatestPosts(Builder $builder, $limit = 2)
     {
-        return $builder->visibleByDate()
+        return $builder->visible()
+            ->withCount(['comments' => function($query) { return $query->active(); }])
+            ->orderBy('date', 'desc')
             ->limit($limit);
     }
 

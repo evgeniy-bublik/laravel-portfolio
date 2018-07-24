@@ -11,51 +11,10 @@
                     <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="images/slider/3.jpg" data-saveperformance="off" data-title="Awesome Title Here">
                         <img src="/images/slider/3.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
                         <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="-140" data-speed="1500" data-start="500" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="title-top">Hello, I’m Danny</div>
+                            <div class="title-top">{{ $aboutMe[ 'last_name' ] }} {{ $aboutMe[ 'first_name' ] }}</div>
                         </div>
                         <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="-50" data-speed="1500" data-start="500" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="title">Expert in Graphic Design &
-                                <br /> Development</div>
-                        </div>
-                        <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="50" data-speed="1500" data-start="1000" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="text">BCurrently available for select projects, collaborations and consulting.Currently
-                                <br /> available for select projects, collaborations and consulting.</div>
-                        </div>
-                        <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="120" data-speed="1500" data-start="1500" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="tp-btn">
-                                <a href="#" class="btn-one">See My work</a>
-                            </div>
-                        </div>
-                    </li>
-                    <!--slider 2 -->
-                    <li data-transition="zoomin" data-slotamount="1" data-masterspeed="1000" data-thumb="images/slider/3.jpg" data-saveperformance="off" data-title="Awesome Title Here">
-                        <img src="/images/slider/3.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-                        <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="-140" data-speed="1500" data-start="500" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="title-top">Hello, I’m Danny</div>
-                        </div>
-                        <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="-50" data-speed="1500" data-start="500" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="title">Expert in Graphic Design &
-                                <br /> Development</div>
-                        </div>
-                        <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="50" data-speed="1500" data-start="1000" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="text">BCurrently available for select projects, collaborations and consulting.Currently
-                                <br /> available for select projects, collaborations and consulting.</div>
-                        </div>
-                        <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="120" data-speed="1500" data-start="1500" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="tp-btn">
-                                <a href="#" class="btn-one">See My work</a>
-                            </div>
-                        </div>
-                    </li>
-                    <!--slider 3 -->
-                    <li data-transition="zoomin" data-slotamount="1" data-masterspeed="1000" data-thumb="images/slider/3.jpg" data-saveperformance="off" data-title="Awesome Title Here">
-                        <img src="/images/slider/3.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-                        <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="-140" data-speed="1500" data-start="500" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="title-top">Hello, I’m Danny</div>
-                        </div>
-                        <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="-50" data-speed="1500" data-start="500" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
-                            <div class="title">Expert in Graphic Design &
-                                <br /> Development</div>
+                            <div class="title">{{ $aboutMe[ 'professional' ] }}</div>
                         </div>
                         <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="50" data-speed="1500" data-start="1000" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
                             <div class="text">BCurrently available for select projects, collaborations and consulting.Currently
@@ -84,10 +43,10 @@
                 </div>
                 <div class="col-md-7 col-sm-6 col-xs-12 about-column">
                     <div class="about-content">
-                        <div class="top-title">Hello! I’ am Danny</div>
-                        <div class="title">Graphic Design And Web Development</div>
+                        <div class="top-title">Привет, меня зовут {{ $aboutMe[ 'first_name' ] }} {{ $aboutMe[ 'last_name' ] }}</div>
+                        <div class="title">{{ $aboutMe[ 'professional' ] }}</div>
                         <div class="text">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et d magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea co consequat. Duis aute irure dolor in reprehenderit in.</p>
+                            <p>{{ $aboutMe[ 'full_about_me' ] }}</p>
                         </div>
                         <div class="progress-content">
 
@@ -114,18 +73,13 @@
     <!-- view resume -->
     <section class="view-resume centred">
         <div class="container">
-            <div class="sec-title">
-                <h2>View My Resume</h2></div>
-            <div class="text">
-                <p>Uaerat litora, taciti quaerat dolor ligula laoreet omnis aut scelerisque ex fuga platea eveniet pulvinar praesent
-                    <br /> molestiae maiores, quidem cumque!</p>
-            </div>
-            <div class="button"><a href="#" class="btn-one">Download Cv</a></div>
+            <div class="sec-title"><h2>Мое резюме</h2></div>
+            <div class="button"><a href="#" class="btn-one">Загрузить</a></div>
         </div>
     </section>
     <!-- view resume -->
     <!-- gallery section -->
-    <section class="gallery-section centred gallery-style-two">
+    <!-- <section class="gallery-section centred gallery-style-two">
         <div class="container">
             <div class="gallery-title">
                 <div class="sec-title">
@@ -331,39 +285,35 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- gallery section end -->
     <!-- subscribe section -->
     <section class="subscribe-section subscribe-style-two sec-pad">
         <div class="container">
             <div class="subscribe-title centred">
-                <div class="sec-title">
-                    <h2>Keep In touch</h2></div>
-                <div class="title-text">
-                    <p>Non quos ratione ipsa facilisis dapibus rutrum mi . Vivamus dapibus rutrum mi ut aliquam.</p>
-                </div>
+                <div class="sec-title"><h2>Написать мне</h2></div>
             </div>
             <div class="subscribe-form">
-                <form id="contact-form" name="contact_form" class="default-form" action="inc/sendmail.php" method="post">
+                <form id="contact-form" name="contact_form" class="default-form" action="" method="post">
                     <div class="row">
                         <div class="col-md-4 col-sm-12 col-xs-12">
-                            <input type="text" name="form_name" value="" placeholder="Your Name" required="">
+                            <input type="text" name="form_name" value="" placeholder="Ваше имя" required="">
                         </div>
                         <div class="col-md-4 col-sm-12 col-xs-12">
-                            <input type="email" name="form_email" value="" placeholder="Your Email" required="">
+                            <input type="email" name="form_email" value="" placeholder="Ваш email" required="">
                         </div>
                         <div class="col-md-4 col-sm-12 col-xs-12">
-                            <input type="text" name="form_phone" value="" placeholder="Website" required="">
+                            <input type="text" name="form_phone" value="" placeholder="Сайт" required="">
                         </div>
                         <div class="colo-md-12 col-sm-12 col-xs-12">
-                            <input type="text" name="form_subject" value="" placeholder="Subject" required="">
+                            <input type="text" name="form_subject" value="" placeholder="Тема" required="">
                         </div>
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <textarea placeholder="Type Your Message Here . . ." name="form_message" required=""></textarea>
+                            <textarea placeholder="Ваше сообщение" name="form_message" required=""></textarea>
                         </div>
                     </div>
                     <div class="subscribe-btn centred">
-                        <button type="submit" class="btn-one" data-loading-text="Please wait...">send message</button>
+                        <button type="submit" class="btn-one" data-loading-text="Please wait...">Отправить</button>
                     </div>
                 </form>
             </div>
