@@ -74,7 +74,7 @@
     <section class="view-resume centred">
         <div class="container">
             <div class="sec-title"><h2>Мое резюме</h2></div>
-            <div class="button"><a href="#" class="btn-one">Загрузить</a></div>
+            <div class="button"><a target="blank" href="{{ $aboutMe[ 'сurriculum_vitae_link' ] }}" class="btn-one">Загрузить</a></div>
         </div>
     </section>
     <!-- view resume -->
