@@ -8,6 +8,8 @@ use App\Models\Post\Post;
 use App\Models\Post\Tag;
 use App\Models\Post\Category;
 use App\Models\Post\PostUniqueView;
+use App\Http\Requests\PostCommentRequest;
+use App\Models\Post\Comment;
 
 /**
  * Post controller.
@@ -99,5 +101,33 @@ class PostController extends Controller
             'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
             'activeCategoryId' => 0,
         ]);
+    }
+
+    public function addComment(PostCommentRequest $request, Post $post)
+    {
+        $response = [
+            'status' => false,
+            'content' => view('modals.base_content', [
+                'modalBodyText' => 'Произошла ошибка, попробуйте позже',
+                'modalHeaderText' => 'Ошибка',
+            ])->render(),
+        ];
+
+        $request[ 'post_id' ] = $post->id;
+
+        $comment = new Comment();
+
+        $comment->fill($request->all());
+        $comment->post_id = $post->id;
+
+        if ($comment->save()) {
+            $response[ 'status' ] = true;
+            $response[ 'content' ] = view('modals.base_content', [
+                'modalBodyText' => 'Комментарий добавлен, однако появится он после модерации',
+                'modalHeaderText' => 'Комментарий добавлен',
+            ])->render();
+        }
+
+        return $response;
     }
 }

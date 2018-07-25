@@ -23,6 +23,7 @@ Route::group(['prefix' => '/posts'], function() {
     Route::get('/{slug}', 'Post\PostController@item')->name('posts.item');
     Route::get('/tag/{tagSlug}', 'Post\PostController@byTag')->name('posts.by.tag');
     Route::get('/category/{categorySlug}', 'Post\PostController@byCategory')->name('posts.by.category');
+    Route::post('/add-comment/{post}', 'Post\PostController@addComment')->name('posts.add.comment');
 
 });
 

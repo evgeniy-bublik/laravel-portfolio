@@ -2222,6 +2222,8 @@ textarea:focus{
   position: absolute;
   left: 0px;
   top: 7px;
+  width: 130px;
+  height: 150px;
 }
 .blog-details .blog-details-content .comment-area .single-comment .title{
   position: relative;
