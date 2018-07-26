@@ -25,6 +25,8 @@ class Post extends Model
      */
     const LIMIT_POSTS_ON_PAGE = 15;
 
+    const FILE_PATH = 'storege/posts';
+
     /**
      * Scope for get visible posts.
      *
@@ -73,7 +75,6 @@ class Post extends Model
             ->limit($limit);
     }
 
-
     /**
      * Get hunam format post date.
      *
@@ -95,6 +96,11 @@ class Post extends Model
             $tagIds = $this->tags()->pluck('post_tags.id')->all();
             $query->whereIn('post_tags.id', $tagIds);
         })->where('id', '<>', $this->id)->limit(self::LIMIT_RELATED_POSTS)->get();
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return self::FILE_PATH . '/' . $this->attributes[ 'image' ];
     }
 
     /**

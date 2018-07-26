@@ -19,16 +19,12 @@
                 <div class="col-md-8 col-sm-12 col-xs-12">
                     <div class="portfolio-details-content">
                         <div class="img-box">
-                            <figure><img src="images/gallery/details.jpg" alt=""></figure>
+                            <figure><img src="{{ asset($work->imageUrl) }}" alt="{{ $work->name }}"></figure>
                         </div>
-                        <div class="title">Home interior decoration</div>
-                        <div class="text">
-                            <p>Standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheetsStandard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets</p>
-                            <p>Standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets</p>
-                            <p>Standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
-                        </div>
+                        <div class="title">{{ $work->name }}</div>
+                        <div class="text">{{ $work->description }}</div>
                         <div class="post-share">
-                            <div class="share">Share :</div>
+                            <div class="share">Поделиться :</div>
                             <ul class="post-social">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -42,32 +38,26 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="portfolio-sidebar">
                         <div class="sidebar-content">
-                            <div class="title">
-                                <h5>Project Details</h5></div>
-                            <div class="single-item">
-                                <div class="icon-box"><i class="flaticon-social"></i></div>
-                                <div class="text">Client:</div>
-                                <p>Index, INC</p>
-                            </div>
+                            <div class="title"><h5>Детали работы</h5></div>
                             <div class="single-item">
                                 <div class="icon-box"><i class="flaticon-calendar-with-spring-binder-and-date-blocks"></i></div>
-                                <div class="text">Date:</div>
-                                <p>November, 15 2016</p>
+                                <div class="text">Дата:</div>
+                                <p>{{ $work->humanDate }}</p>
                             </div>
                             <div class="single-item">
-                                <div class="icon-box"><i class="flaticon-location"></i></div>
-                                <div class="text">Location:</div>
-                                <p>Melbourne VIC 3000 city</p>
+                                <div class="icon-box"><i class="flaticon-layers"></i></div>
+                                <div class="text">Категория:</div>
+                                <p>{{ $work->category->name }}</p>
                             </div>
                             <div class="single-item">
-                                <div class="icon-box"><i class="flaticon-agenda"></i></div>
-                                <div class="text">Category:</div>
-                                <p>Designing / Branding</p>
+                                <div class="icon-box"><i class="flaticon-technology"></i></div>
+                                <div class="text">Технологии:</div>
+                                <p>{{ $work->technologies }}</p>
                             </div>
                             <div class="single-item">
                                 <div class="icon-box"><i class="flaticon-shapes"></i></div>
-                                <div class="text">Share:</div>
-                                <p>Facebook, Twitter</p>
+                                <div class="text">Ссылка на сайт:</div>
+                                <p><a href="{{ $work->url }}" target="_blank">{{ $work->name }}</a></p>
                             </div>
                         </div>
                     </div>

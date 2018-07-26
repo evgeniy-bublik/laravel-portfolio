@@ -15,7 +15,7 @@
             @endforeach
 
         </ul>
-        <div class="copyright">Copyright © 2018 <a href="#">Ryazan</a>. All Rights Reserved</div>
+        <div class="copyright">Copyright © {{ (date('Y') == 2018) ? 2018 : 2018 - date('Y')}}. Все права защищены.</div>
     </div>
 </footer>
 <!-- footer style two end -->

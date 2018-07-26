@@ -22,7 +22,7 @@
                         </div>
                         <div class="tp-caption sfl sfb tp-resizeme" data-x="left" data-hoffset="15" data-y="center" data-voffset="120" data-speed="1500" data-start="1500" data-easing="easeOutExpo" data-splitin="none" data-splitout="none" data-elementdelay="0.01" data-endelementdelay="0.3" data-endspeed="1200" data-endeasing="Power4.easeIn">
                             <div class="tp-btn">
-                                <a href="#" class="btn-one">See My work</a>
+                                <a href="{{ route('portfolio.index') }}" class="btn-one">Мои работы</a>
                             </div>
                         </div>
                     </li>
@@ -79,213 +79,55 @@
     </section>
     <!-- view resume -->
     <!-- gallery section -->
-    <!-- <section class="gallery-section centred gallery-style-two">
+    <section class="gallery-section centred gallery-style-two">
         <div class="container">
             <div class="gallery-title">
-                <div class="sec-title">
-                    <h2>Recent Work</h2></div>
+                <div class="sec-title"><h2>Последние работы</h2></div>
             </div>
             <ul class="post-filter centred ">
                 <li class="active" data-filter=".filter-item">
-                    <span>All</span>
+                    <span>Все</span>
                 </li>
-                <li data-filter=".Consulting">
-                    <span>Digital</span>
-                </li>
-                <li data-filter=".Finance">
-                    <span>Barnding</span>
-                </li>
-                <li data-filter=".Marketing">
-                    <span>Marketing</span>
-                </li>
-                <li data-filter=".Growth">
-                    <span>Video</span>
-                </li>
+
+                @foreach ($portfolioCategories as $category)
+
+                    <li data-filter=".category-{{ $category->id }}">
+                        <span>{{ $category->name }}</span>
+                    </li>
+
+                @endforeach
+
             </ul>
             <div class="row masonary-layout filter-layout">
-                <div class="col-md-4 col-sm-6 col-xs-12 filter-item">
-                    <div class="single-item">
-                        <div class="single-item-overlay">
-                            <div class="img-box">
-                                <img src="/images/gallery/g1.jpg" alt="">
-                                <div class="overlay">
-                                    <div class="inner-box">
-                                        <div class="content">
-                                            <div class="title">Home Decoration</div>
-                                            <div class="text">Branding</div>
-                                            <ul>
-                                                <li><a href="{{ route('portfolio.item') }}"><i class="fa fa-link"></i></a></li>
-                                            </ul>
+
+                @foreach ($portfolioWorks as $work)
+
+                    <div class="col-md-4 col-sm-6 col-xs-12 filter-item category-{{ $work->category_id }}">
+                        <div class="single-item">
+                            <div class="single-item-overlay">
+                                <div class="img-box">
+                                    <img src="{{ asset($work->imageUrl) }}" alt="{{ $work->name }}">
+                                    <div class="overlay">
+                                        <div class="inner-box">
+                                            <div class="content">
+                                                <div class="title">{{ $work->name }}</div>
+                                                <div class="text">{{ $work->category->name }}</div>
+                                                <ul>
+                                                    <li><a href="{{ route('portfolio.item', ['itemSlug' => $work->slug]) }}"><i class="fa fa-link"></i></a></li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 filter-item Consulting Finance Growth">
-                    <div class="single-item">
-                        <div class="single-item-overlay">
-                            <div class="img-box">
-                                <img src="/images/gallery/g2.jpg" alt="">
-                                <div class="overlay">
-                                    <div class="inner-box">
-                                        <div class="content">
-                                            <div class="title">Home Decoration</div>
-                                            <div class="text">Branding</div>
-                                            <ul>
-                                                <li><a href="{{ route('portfolio.item') }}"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 filter-item Finance Growth Marketing">
-                    <div class="single-item">
-                        <div class="single-item-overlay">
-                            <div class="img-box">
-                                <img src="/images/gallery/g3.jpg" alt="">
-                                <div class="overlay">
-                                    <div class="inner-box">
-                                        <div class="content">
-                                            <div class="title">Home Decoration</div>
-                                            <div class="text">Branding</div>
-                                            <ul>
-                                                <li><a href="{{ route('portfolio.item') }}"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 filter-item Consulting Marketing Finance">
-                    <div class="single-item">
-                        <div class="single-item-overlay">
-                            <div class="img-box">
-                                <img src="/images/gallery/g6.jpg" alt="">
-                                <div class="overlay">
-                                    <div class="inner-box">
-                                        <div class="content">
-                                            <div class="title">Home Decoration</div>
-                                            <div class="text">Branding</div>
-                                            <ul>
-                                                <li><a href="{{ route('portfolio.item') }}"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 filter-item Consulting Marketing">
-                    <div class="single-item">
-                        <div class="single-item-overlay">
-                            <div class="img-box">
-                                <img src="/images/gallery/g4.jpg" alt="">
-                                <div class="overlay">
-                                    <div class="inner-box">
-                                        <div class="content">
-                                            <div class="title">Home Decoration</div>
-                                            <div class="text">Branding</div>
-                                            <ul>
-                                                <li><a href="{{ route('portfolio.item') }}"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 filter-item Consulting Finance Marketing video">
-                    <div class="single-item">
-                        <div class="single-item-overlay">
-                            <div class="img-box">
-                                <img src="/images/gallery/g5.jpg" alt="">
-                                <div class="overlay">
-                                    <div class="inner-box">
-                                        <div class="content">
-                                            <div class="title">Home Decoration</div>
-                                            <div class="text">Branding</div>
-                                            <ul>
-                                                <li><a href="{{ route('portfolio.item') }}"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 filter-item Marketing video">
-                    <div class="single-item">
-                        <div class="single-item-overlay">
-                            <div class="img-box">
-                                <img src="/images/gallery/g9.jpg" alt="">
-                                <div class="overlay">
-                                    <div class="inner-box">
-                                        <div class="content">
-                                            <div class="title">Home Decoration</div>
-                                            <div class="text">Branding</div>
-                                            <ul>
-                                                <li><a href="{{ route('portfolio.item') }}"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 filter-item Marketing video">
-                    <div class="single-item">
-                        <div class="single-item-overlay">
-                            <div class="img-box">
-                                <img src="/images/gallery/g7.jpg" alt="">
-                                <div class="overlay">
-                                    <div class="inner-box">
-                                        <div class="content">
-                                            <div class="title">Home Decoration</div>
-                                            <div class="text">Branding</div>
-                                            <ul>
-                                                <li><a href="{{ route('portfolio.item') }}"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 filter-item Marketing video">
-                    <div class="single-item">
-                        <div class="single-item-overlay">
-                            <div class="img-box">
-                                <img src="/images/gallery/g8.jpg" alt="">
-                                <div class="overlay">
-                                    <div class="inner-box">
-                                        <div class="content">
-                                            <div class="title">Home Decoration</div>
-                                            <div class="text">Branding</div>
-                                            <ul>
-                                                <li><a href="{{ route('portfolio.item') }}"><i class="fa fa-link"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                @endforeach
+
             </div>
         </div>
-    </section> -->
+    </section>
     <!-- gallery section end -->
 
     @include('contact_form')

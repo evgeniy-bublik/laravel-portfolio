@@ -23,7 +23,7 @@
                             @if ($post->image)
 
                                 <div class="img-box">
-                                    <figure><img src="/images/news/details.jpg" alt=""></figure>
+                                    <figure><img src="{{ asset($post->imageUrl) }}" alt="{{ $post->name }}"></figure>
                                 </div>
 
                             @endif
@@ -72,7 +72,7 @@
 
                                                     <div class="single-item-overlay">
                                                         <div class="img-box">
-                                                            <img src="/images/news/1.jpg" alt="">
+                                                            <img src="{{ asset($relatedPost->imageUrl) }}" alt="{{ $relatedPost->name }}">
                                                             <div class="overlay">
                                                                 <div class="inner-box">
                                                                     <div class="content">

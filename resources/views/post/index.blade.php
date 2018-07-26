@@ -27,7 +27,7 @@
 
                                         @if ($post->image)
 
-                                            <img src="/images/news/4.jpg" alt="">
+                                            <img src="{{ asset($post->imageUrl) }}" alt="{{ $post->name }}">
                                             <div class="overlay">
                                                 <div class="inner-box">
                                                     <div class="content">

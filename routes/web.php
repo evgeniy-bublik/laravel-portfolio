@@ -29,13 +29,8 @@ Route::group(['prefix' => '/posts'], function() {
 
 Route::group(['prefix' => '/portfolio'], function() {
 
-    Route::get('/', function() {
-        return view('portfolio.index');
-    })->name('portfolio.index');
-
-    Route::get('/item', function() {
-        return view('portfolio.item');
-    })->name('portfolio.item');
+    Route::get('/', 'Portfolio\WorkController@index')->name('portfolio.index');
+    Route::get('/{itemSlug}', 'Portfolio\WorkController@portfolioWork')->name('portfolio.item');
 
 });
 
