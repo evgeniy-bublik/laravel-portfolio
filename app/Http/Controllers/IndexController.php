@@ -26,6 +26,24 @@ class IndexController extends Controller
             'professionalSkills' => ProfessionalSkill::active()->orderBy('display_order', 'desc')->get(),
             'portfolioCategories' => Category::active()->orderBy('display_order', 'desc')->get(),
             'portfolioWorks' => Work::active()->orderBy('date', 'desc')->paginate(),
+            'metaTitle' => 'Личный сайт Евгения Бублика |' . env('SITE_NAME', ''),
+            'metaKeywords' => '',
+            'metaDescription' => '',
+        ]);
+    }
+
+    /**
+     * Display contacts page.
+     *
+     * @param \Illuminate\Http\Request $request Request
+     * @return \Illuminate\Support\Facades\View
+     */
+    public function contacts(Request $request)
+    {
+        return view('contacts', [
+            'metaTitle' => 'Мои контактные данные |' . env('SITE_NAME', ''),
+            'metaKeywords' => '',
+            'metaDescription' => '',
         ]);
     }
 

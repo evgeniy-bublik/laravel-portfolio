@@ -29,6 +29,19 @@ class Category extends Model
     }
 
     /**
+     * Get post category meta title with replaced placeholders.
+     *
+     * @return string
+     */
+    public function getMetaTitleAttribute()
+    {
+        return strtr($this->attributes[ 'meta_title' ], [
+            '{categoryName}' => $this->name,
+            '{siteName}' => env('SITE_NAME', ''),
+        ]);
+    }
+
+    /**
      * Posts by category.
      *
      * @return

@@ -8,6 +8,7 @@ use App\Models\User\AboutMe;
 use App\Models\User\SocialLink;
 use App\Models\Post\Post;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
         $oneDayMinutes = 60 * 24;
 
         View::share('aboutMe', Cache::remember('about-me', $oneDayMinutes, function () {

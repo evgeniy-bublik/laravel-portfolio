@@ -29,6 +29,19 @@ class Work extends Model
     }
 
     /**
+     * Get portfolio work meta title with replaced placeholders.
+     *
+     * @return string
+     */
+    public function getMetaTitleAttribute()
+    {
+        return strtr($this->attributes[ 'meta_title' ], [
+            '{workName}' => $this->name,
+            '{siteName}' => env('SITE_NAME', ''),
+        ]);
+    }
+
+    /**
      * Get hunam format post date.
      *
      * @return string

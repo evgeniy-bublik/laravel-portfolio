@@ -1,5 +1,21 @@
 @extends('layouts.main')
 
+@section('title')
+
+{{ $metaTitle }}
+
+@stop
+@section('meta-keywords')
+
+{{ $metaKeywords }}
+
+@stop
+@section('meta-description')
+
+{{ $metaDescription }}
+
+@stop
+
 @section('content')
 
     <!--Main Slider-->

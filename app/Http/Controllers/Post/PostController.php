@@ -30,6 +30,9 @@ class PostController extends Controller
             'activeTagId' => 0,
             'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
             'activeCategoryId' => 0,
+            'metaTitle' => 'Блог | ' . env('SITE_NAME', ''),
+            'metaKeywords' => '',
+            'metaDescription' => '',
         ]);
     }
 
@@ -80,6 +83,9 @@ class PostController extends Controller
             'activeTagId' => 0,
             'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
             'activeCategoryId' => $category->id,
+            'metaTitle' => $category->meta_title,
+            'metaKeywords' => $category->meta_keywords,
+            'metaDescription' => $category->meta_description,
         ]);
     }
 
@@ -100,6 +106,9 @@ class PostController extends Controller
             'activeTagId' => $tag->id,
             'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
             'activeCategoryId' => 0,
+            'metaTitle' => $tag->meta_title,
+            'metaKeywords' => $tag->meta_keywords,
+            'metaDescription' => $tag->meta_description,
         ]);
     }
 

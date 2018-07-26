@@ -98,9 +98,27 @@ class Post extends Model
         })->where('id', '<>', $this->id)->limit(self::LIMIT_RELATED_POSTS)->get();
     }
 
+    /**
+     * Get image url attribute.
+     *
+     * @return string
+     */
     public function getImageUrlAttribute()
     {
         return self::FILE_PATH . '/' . $this->attributes[ 'image' ];
+    }
+
+    /**
+     * Get post meta title with replaced placeholders.
+     *
+     * @return string
+     */
+    public function getMetaTitleAttribute()
+    {
+        return strtr($this->attributes[ 'meta_title' ], [
+            '{postName}' => $this->name,
+            '{siteName}' => env('SITE_NAME', ''),
+        ]);
     }
 
     /**

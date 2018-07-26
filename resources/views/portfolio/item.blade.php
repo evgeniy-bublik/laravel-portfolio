@@ -1,5 +1,21 @@
 @extends('layouts.main')
 
+@section('title')
+
+{{ $work->meta_title }}
+
+@stop
+@section('keywords')
+
+{{ $work->meta_keywords }}
+
+@stop
+@section('description')
+
+{{ $work->meta_description }}
+
+@stop
+
 @section('content')
 
     <!-- page title -->

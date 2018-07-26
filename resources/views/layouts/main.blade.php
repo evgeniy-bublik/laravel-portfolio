@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Ryazan | Responsive HTML 5 Template</title>
+    <meta name="description" content="@yield('meta-description', '')">
+    <meta name="keywords" content="@yield('meta-keywords', '')">
+    <title>@yield('title', '')</title>
     <!-- Stylesheets -->
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/responsive.css" rel="stylesheet">

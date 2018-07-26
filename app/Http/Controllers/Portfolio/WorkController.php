@@ -23,6 +23,9 @@ class WorkController extends Controller
         return view('portfolio.index', [
             'categories' => Category::active()->orderBy('display_order', 'desc')->get(),
             'works' => Work::active()->orderBy('date', 'desc')->paginate(),
+            'metaTitle' => 'Мои работы | ' . env('SITE_NAME', ''),
+            'metaKeywords' => '',
+            'metaDescription' => '',
         ]);
     }
 

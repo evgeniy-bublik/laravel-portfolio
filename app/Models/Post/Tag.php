@@ -29,6 +29,19 @@ class Tag extends Model
     }
 
     /**
+     * Get tag meta title with replaced placeholders.
+     *
+     * @return string
+     */
+    public function getMetaTitleAttribute()
+    {
+        return strtr($this->attributes[ 'meta_title' ], [
+            '{tagName}' => $this->name,
+            '{siteName}' => env('SITE_NAME', ''),
+        ]);
+    }
+
+    /**
      * Posts by tag.
      *
      * @return
