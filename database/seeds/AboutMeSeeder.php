@@ -27,7 +27,7 @@ class AboutMeSeeder extends Seeder
               ],
               [
                   'key'   => AboutMe::KEY_CV_LINK,
-                  'value' => '',
+                  'value' => '/files/app/cv.pdf',
               ],
               [
                   'key'   => AboutMe::KEY_FIRST_NAME,
