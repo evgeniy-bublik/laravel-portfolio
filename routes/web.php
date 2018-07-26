@@ -12,10 +12,7 @@
 */
 
 Route::get('/', 'IndexController@index')->name('index');
-
-Route::get('/contacts', function() {
-    return view('contacts');
-})->name('contacts');
+Route::get('/contacts', 'IndexController@contacts')->name('contacts');
 
 Route::group(['prefix' => '/posts'], function() {
 
