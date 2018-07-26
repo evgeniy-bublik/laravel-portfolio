@@ -8,12 +8,31 @@ use App\Http\Requests\SupportMessageRequest;
 use App\Models\Support;
 use App\Models\Portfolio\Work;
 use App\Models\Portfolio\Category;
+use App\Services\SiteCorePageService;
 
 /**
  * Index controller.
  */
 class IndexController extends Controller
 {
+    /**
+     * Site page service.
+     *
+     * @access private
+     * @var \App\Services\SiteCorePageService $sitePageService
+     */
+    private $sitePageService;
+
+    /**
+     * {$inheritdoc}
+     *
+     * @return void
+     */
+    public function __construct(SiteCorePageService $sitePageService)
+    {
+        $this->sitePageService = $sitePageService;
+    }
+
     /**
      * Display index page.
      *
@@ -22,13 +41,15 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
+        $page = $this->sitePageService->getIndexPage();
+
         return view('index', [
             'professionalSkills' => ProfessionalSkill::active()->orderBy('display_order', 'desc')->get(),
             'portfolioCategories' => Category::active()->orderBy('display_order', 'desc')->get(),
             'portfolioWorks' => Work::active()->orderBy('date', 'desc')->paginate(),
-            'metaTitle' => 'Личный сайт Евгения Бублика |' . env('SITE_NAME', ''),
-            'metaKeywords' => '',
-            'metaDescription' => '',
+            'metaTitle' => $page->meta_title,
+            'metaKeywords' => $page->meta_keywords,
+            'metaDescription' => $page->meta_description,
         ]);
     }
 
@@ -40,10 +61,12 @@ class IndexController extends Controller
      */
     public function contacts(Request $request)
     {
+        $page = $this->sitePageService->getContactsPage();
+
         return view('contacts', [
-            'metaTitle' => 'Мои контактные данные |' . env('SITE_NAME', ''),
-            'metaKeywords' => '',
-            'metaDescription' => '',
+            'metaTitle' => $page->meta_title,
+            'metaKeywords' => $page->meta_keywords,
+            'metaDescription' => $page->meta_description,
         ]);
     }
 

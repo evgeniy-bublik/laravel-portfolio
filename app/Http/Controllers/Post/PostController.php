@@ -10,12 +10,31 @@ use App\Models\Post\Category;
 use App\Models\Post\PostUniqueView;
 use App\Http\Requests\PostCommentRequest;
 use App\Models\Post\Comment;
+use App\Services\SiteCorePageService;
 
 /**
  * Post controller.
  */
 class PostController extends Controller
 {
+    /**
+     * Site page service.
+     *
+     * @access private
+     * @var \App\Services\SiteCorePageService $sitePageService
+     */
+    private $sitePageService;
+
+    /**
+     * {$inheritdoc}
+     *
+     * @return void
+     */
+    public function __construct(SiteCorePageService $sitePageService)
+    {
+        $this->sitePageService = $sitePageService;
+    }
+
     /**
      * Display page with all posts.
      *
@@ -24,15 +43,17 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        $page = $this->sitePageService->getBlogPage();
+
         return view('post.index', [
             'posts' => Post::visible()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
             'listTags' => Tag::active()->get(),
             'activeTagId' => 0,
             'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
             'activeCategoryId' => 0,
-            'metaTitle' => 'Блог | ' . env('SITE_NAME', ''),
-            'metaKeywords' => '',
-            'metaDescription' => '',
+            'metaTitle' => $page->meta_title,
+            'metaKeywords' => $page->meta_keywords,
+            'metaDescription' => $page->meta_description,
         ]);
     }
 
