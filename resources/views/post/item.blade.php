@@ -154,13 +154,13 @@
                             <form id="comment-form" name="contact_form" class="default-form" action="{{ route('posts.add.comment', compact('post')) }}" method="post">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" name="user_name" value="" placeholder="Имя" required="">
+                                        <input type="text" name="user_name" value="" placeholder="Имя">
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="email" name="user_email" value="" placeholder="Email" required="">
+                                        <input type="email" name="user_email" value="" placeholder="Email">
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <textarea placeholder="Текст" name="text" required=""></textarea>
+                                        <textarea placeholder="Текст" name="text"></textarea>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn-one" data-loading-text="Please wait...">Оставить</button>

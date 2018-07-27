@@ -94,57 +94,62 @@
         </div>
     </section>
     <!-- view resume -->
-    <!-- gallery section -->
-    <section class="gallery-section centred gallery-style-two">
-        <div class="container">
-            <div class="gallery-title">
-                <div class="sec-title"><h2>Последние работы</h2></div>
-            </div>
-            <ul class="post-filter centred ">
-                <li class="active" data-filter=".filter-item">
-                    <span>Все</span>
-                </li>
 
-                @foreach ($portfolioCategories as $category)
+    @if ($portfolioWorks->count())
 
-                    <li data-filter=".category-{{ $category->id }}">
-                        <span>{{ $category->name }}</span>
+        <!-- gallery section -->
+        <section class="gallery-section centred gallery-style-two">
+            <div class="container">
+                <div class="gallery-title">
+                    <div class="sec-title"><h2>Последние работы</h2></div>
+                </div>
+                <ul class="post-filter centred ">
+                    <li class="active" data-filter=".filter-item">
+                        <span>Все</span>
                     </li>
 
-                @endforeach
+                    @foreach ($portfolioCategories as $category)
 
-            </ul>
-            <div class="row masonary-layout filter-layout">
+                        <li data-filter=".category-{{ $category->id }}">
+                            <span>{{ $category->name }}</span>
+                        </li>
 
-                @foreach ($portfolioWorks as $work)
+                    @endforeach
 
-                    <div class="col-md-4 col-sm-6 col-xs-12 filter-item category-{{ $work->category_id }}">
-                        <div class="single-item">
-                            <div class="single-item-overlay">
-                                <div class="img-box">
-                                    <img src="{{ asset($work->imageUrl) }}" alt="{{ $work->name }}">
-                                    <div class="overlay">
-                                        <div class="inner-box">
-                                            <div class="content">
-                                                <div class="title">{{ $work->name }}</div>
-                                                <div class="text">{{ $work->category->name }}</div>
-                                                <ul>
-                                                    <li><a href="{{ route('portfolio.item', ['itemSlug' => $work->slug]) }}"><i class="fa fa-link"></i></a></li>
-                                                </ul>
+                </ul>
+                <div class="row masonary-layout filter-layout">
+
+                    @foreach ($portfolioWorks as $work)
+
+                        <div class="col-md-4 col-sm-6 col-xs-12 filter-item category-{{ $work->category_id }}">
+                            <div class="single-item">
+                                <div class="single-item-overlay">
+                                    <div class="img-box">
+                                        <img src="{{ asset($work->imageUrl) }}" alt="{{ $work->name }}">
+                                        <div class="overlay">
+                                            <div class="inner-box">
+                                                <div class="content">
+                                                    <div class="title">{{ $work->name }}</div>
+                                                    <div class="text">{{ $work->category->name }}</div>
+                                                    <ul>
+                                                        <li><a href="{{ route('portfolio.item', ['itemSlug' => $work->slug]) }}"><i class="fa fa-link"></i></a></li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                @endforeach
+                    @endforeach
 
+                </div>
             </div>
-        </div>
-    </section>
-    <!-- gallery section end -->
+        </section>
+        <!-- gallery section end -->
+
+    @endif
 
     @include('contact_form')
 

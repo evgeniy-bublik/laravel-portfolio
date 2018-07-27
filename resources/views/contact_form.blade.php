@@ -6,19 +6,19 @@
             <form id="contact-form" name="contact_form" class="default-form" action="{{ route('supports.send') }}" method="post">
                 <div class="row">
                     <div class="col-md-4 col-sm-12 col-xs-12">
-                        <input type="text" name="name" value="" placeholder="Ваше имя" required="">
+                        <input type="text" name="name" value="" placeholder="Ваше имя">
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12">
-                        <input type="email" name="email" value="" placeholder="Ваш email" required="">
+                        <input type="email" name="email" value="" placeholder="Ваш email">
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12">
-                        <input type="text" name="site" value="" placeholder="Сайт" required="">
+                        <input type="text" name="site" value="" placeholder="Сайт">
                     </div>
                     <div class="colo-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="subject" value="" placeholder="Тема" required="">
+                        <input type="text" name="subject" value="" placeholder="Тема">
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <textarea placeholder="Ваше сообщение" name="text" required=""></textarea>
+                        <textarea placeholder="Ваше сообщение" name="text"></textarea>
                     </div>
                 </div>
                 <div class="contact-btn centred">
