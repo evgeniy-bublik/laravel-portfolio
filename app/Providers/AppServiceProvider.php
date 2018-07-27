@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\User\AboutMe;
 use App\Models\User\SocialLink;
 use App\Models\Post\Post;
+use App\Models\Portfolio\Work;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 
@@ -32,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
 
         View::share('latestPosts', Cache::remember('latest-posts', $oneDayMinutes, function () {
             return Post::latestPosts()->get();
+        }));
+
+        View::share('latestWorks', Cache::remember('latest-works', $oneDayMinutes, function () {
+            return Work::latestWorks()->get();
         }));
     }
 

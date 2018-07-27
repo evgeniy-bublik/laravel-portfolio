@@ -23,6 +23,19 @@ class Work extends Model
         return $builder->where('active', 1);
     }
 
+    /**
+     * Scope for get latest active works.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLatestWorks(Builder $builder, $limit = 2)
+    {
+        return $builder->active()
+            ->orderBy('date', 'desc')
+            ->limit($limit);
+    }
+
     public function getImageUrlAttribute()
     {
         return self::FILE_PATH . '/' . $this->attributes[ 'image' ];
