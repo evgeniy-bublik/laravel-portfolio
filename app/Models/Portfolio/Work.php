@@ -5,12 +5,27 @@ namespace App\Models\Portfolio;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
 class Work extends Model
 {
     protected $table = 'portfolio_works';
 
-    const FILE_PATH = 'storage/portfolio';
+    protected $fillable = [
+        'category_id',
+        'name',
+        'slug',
+        'url',
+        'description',
+        'date',
+        'technologies',
+        'active',
+        'meta_title',
+        'meta_keywords',
+        'meta_description',
+    ];
+
+    const FILE_PATH = 'portfolio/{id}';
 
     /**
      * Scope for get portfolio works by active field.
@@ -36,9 +51,26 @@ class Work extends Model
             ->limit($limit);
     }
 
+    public function hasImage()
+    {
+        $files = Storage::disk('local')->files('public/'. self::getFilePath($this->id));
+
+        if (isset($files[ 0 ])) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getImageUrlAttribute()
     {
-        return self::FILE_PATH . '/' . $this->attributes[ 'image' ];
+        $files = Storage::disk('local')->files('public/'. self::getFilePath($this->id));
+
+        if (isset($files[ 0 ])) {
+            return Storage::url($files[ 0 ]);
+        }
+
+        return '/images/placeholder.png';
     }
 
     /**
@@ -62,6 +94,13 @@ class Work extends Model
     public function getHumanDateAttribute()
     {
         return (new DateTime($this->attributes[ 'date' ]))->format('M d, Y');
+    }
+
+    public static function getFilePath($id)
+    {
+        return strtr(self::FILE_PATH, [
+            '{id}' => $id,
+        ]);
     }
 
     public function category()

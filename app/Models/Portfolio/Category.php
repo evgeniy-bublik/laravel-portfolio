@@ -9,6 +9,12 @@ class Category extends Model
 {
     protected $table = 'portfolio_categories';
 
+    protected $fillable = [
+        'name',
+        'display_order',
+        'active',
+    ];
+
     /**
      * Scope for get categories by active field.
      *

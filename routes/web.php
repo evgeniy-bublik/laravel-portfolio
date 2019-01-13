@@ -32,3 +32,5 @@ Route::group(['prefix' => '/portfolio'], function() {
 });
 
 Route::post('/supports/send', 'IndexController@storeSupportMessage')->name('supports.send');
+
+include('admin.php');

@@ -36,7 +36,7 @@
                     <div class="blog-details-content">
                         <div class="content-style-one">
 
-                            @if ($post->image)
+                            @if ($post->hasImage())
 
                                 <div class="img-box">
                                     <figure><img src="{{ asset($post->imageUrl) }}" alt="{{ $post->name }}"></figure>

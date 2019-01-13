@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProfessionalSkill extends Model
 {
+    protected $guarded = [];
     /**
      * Scope for get professional skills by active field.
      *

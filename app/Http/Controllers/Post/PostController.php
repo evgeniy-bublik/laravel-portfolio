@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Post;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Post\Post;
-use App\Models\Post\Tag;
-use App\Models\Post\Category;
-use App\Models\Post\PostUniqueView;
+use App\Models\Blog\Post;
+use App\Models\Blog\Tag;
+use App\Models\Blog\Category;
+use App\Models\Blog\PostUniqueView;
 use App\Http\Requests\PostCommentRequest;
-use App\Models\Post\Comment;
+use App\Models\Blog\Comment;
 use App\Services\SiteCorePageService;
 
 /**

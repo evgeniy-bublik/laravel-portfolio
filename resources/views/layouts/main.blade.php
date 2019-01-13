@@ -83,11 +83,11 @@
     </div>
 
     <!--jquery js -->
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="/js/jquery-2.1.4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/wow.js"></script>
     <script src="/js/isotope.js"></script>
     <script src="/js/jquery.fancybox.pack.js"></script>
     <script src="/js/SmoothScroll.js"></script>

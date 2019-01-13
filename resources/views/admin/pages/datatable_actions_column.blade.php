@@ -1,0 +1,1 @@
+<a href="{{ route('admin.pages.edit', ['page' => $model]) }}"><i class="glyphicon glyphicon-pencil"></i></a>

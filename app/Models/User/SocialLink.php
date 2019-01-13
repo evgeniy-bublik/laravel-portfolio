@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class SocialLink extends Model
 {
+    protected $guarded = [];
+
     /**
      * Scope for get social links by active field.
      *

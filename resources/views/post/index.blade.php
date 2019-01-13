@@ -41,7 +41,7 @@
                                 <div class="single-item-overlay">
                                     <div class="img-box">
 
-                                        @if ($post->image)
+                                        @if ($post->hasImage())
 
                                             <img src="{{ asset($post->imageUrl) }}" alt="{{ $post->name }}">
                                             <div class="overlay">

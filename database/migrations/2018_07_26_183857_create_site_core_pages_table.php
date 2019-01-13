@@ -19,8 +19,8 @@ class CreateSiteCorePagesTable extends Migration
             $table->string('url', 255)->unique();
             $table->string('code', 255)->unique();
             $table->string('meta_title', 255)->nullable();
-            $table->string('meta_keywords')->nullable();
-            $table->string('meta_description')->nullable();
+            $table->string('meta_keywords', 255)->nullable();
+            $table->string('meta_description', 255)->nullable();
             $table->timestamps();
         });
     }

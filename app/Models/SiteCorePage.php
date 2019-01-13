@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class SiteCorePage extends Model
 {
+    protected $fillable = [
+        'meta_title',
+        'meta_keywords',
+        'meta_description',
+    ];
     /**
      * Code for index page.
      *
@@ -44,5 +49,10 @@ class SiteCorePage extends Model
         return strtr($this->attributes[ 'meta_title' ], [
             '{siteName}' => env('SITE_NAME', ''),
         ]);
+    }
+
+    public function getBaseMetaTitleAttribute()
+    {
+        return $this->attributes[ 'meta_title' ];
     }
 }
