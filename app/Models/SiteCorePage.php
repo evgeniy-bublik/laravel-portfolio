@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class SiteCorePage extends Model
 {
+    /**
+     * {@inheritdoc}
+     * 
+     * @access protected
+     * 
+     * @var array $fillable.
+     */
     protected $fillable = [
         'meta_title',
         'meta_keywords',
@@ -51,6 +58,11 @@ class SiteCorePage extends Model
         ]);
     }
 
+    /**
+     * Get base meta title.
+     * 
+     * @return string
+     */
     public function getBaseMetaTitleAttribute()
     {
         return $this->attributes[ 'meta_title' ];

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User\ProfessionalSkill;
 use App\Http\Requests\SupportMessageRequest;
 use App\Models\Support;
-use App\Models\Portfolio\Work;
-use App\Models\Portfolio\Category;
-use App\Services\SiteCorePageService;
+use App\Repositories\Eloquent\User\{ProfessionalSkillRepository};
+use App\Repositories\Eloquent\Portfolio\{CategoryRepository, WorkRepository};
+use App\Repositories\Eloquent\Core\{PageRepository, SupportRepository};
+use App\DTOs\Core\MetaDTO;
+use App\Services\HomeService;
 
 /**
  * Index controller.
@@ -16,74 +17,95 @@ use App\Services\SiteCorePageService;
 class IndexController extends Controller
 {
     /**
-     * Site page service.
-     *
+     * Home service.
+     * 
      * @access private
-     * @var \App\Services\SiteCorePageService $sitePageService
+     * 
+     * @var \App\Services\HomeService $homeService;
      */
-    private $sitePageService;
+    private $homeService;
 
     /**
-     * {$inheritdoc}
-     *
+     * {@inheritdoc}
+     * 
+     * @param \App\Services\HomeService $homeService Home service.
+     * 
      * @return void
      */
-    public function __construct(SiteCorePageService $sitePageService)
+    public function __construct(HomeService $homeService)
     {
-        $this->sitePageService = $sitePageService;
+        $this->homeService = $homeService;
     }
 
     /**
      * Display index page.
      *
-     * @param \Illuminate\Http\Request $request Request
+     * @param \Illuminate\Http\Request                                    $request               Request object.
+     * @param \App\Repositories\Eloquent\User\ProfessionalSkillRepository $skillRepo             Professional skill repository.
+     * @param \App\Repositories\Eloquent\Portfolio\CategoryRepository     $portfolioCategoryRepo Portfolio category repository.
+     * @param \App\Repositories\Eloquent\Portfolio\WorkRepository         $portfolioWorkRepo     Portfolio work repository.
+     * @param \App\Repositories\Eloquent\Core\PageRepository              $pageRepo              Core page repository.
+     * 
      * @return \Illuminate\Support\Facades\View
      */
-    public function index(Request $request)
-    {
-        $page = $this->sitePageService->getIndexPage();
+    public function index(
+        Request $request,
+        ProfessionalSkillRepository $skillRepo,
+        CategoryRepository $portfolioCategoryRepo,
+        WorkRepository $portfolioWorkRepo,
+        PageRepository $pageRepo
+    ) {
+        $page    = $pageRepo->getIndexPage();
+        $metaDto = ($page) ? $this->homeService->getMetaFromPage($page) : $this->homeService->getEmptyMetaObject();
 
         return view('index', [
-            'professionalSkills' => ProfessionalSkill::active()->orderBy('display_order', 'desc')->get(),
-            'portfolioCategories' => Category::active()->orderBy('display_order', 'desc')->get(),
-            'portfolioWorks' => Work::active()->orderBy('date', 'desc')->paginate(),
-            'metaTitle' => $page->meta_title,
-            'metaKeywords' => $page->meta_keywords,
-            'metaDescription' => $page->meta_description,
+            'professionalSkills'  => $skillRepo->getActiveItems(),
+            'portfolioCategories' => $portfolioCategoryRepo->getActiveItems(),
+            'portfolioWorks'      => $portfolioWorkRepo->getActiveItems(),
+            'metaDto'             => $metaDto,
         ]);
     }
 
     /**
      * Display contacts page.
      *
-     * @param \Illuminate\Http\Request $request Request
+     * @param \Illuminate\Http\Request                       $request  Request object.
+     * @param \App\Repositories\Eloquent\Core\PageRepository $pageRepo Core page repository.
+     * 
      * @return \Illuminate\Support\Facades\View
      */
-    public function contacts(Request $request)
+    public function contacts(Request $request, PageRepository $pageRepo)
     {
-        $page = $this->sitePageService->getContactsPage();
+        $page    = $pageRepo->getContactsPage();
+        $metaDto = ($page) ? $this->homeService->getMetaFromPage($page) : $this->homeService->getEmptyMetaObject();
 
-        return view('contacts', [
-            'metaTitle' => $page->meta_title,
-            'metaKeywords' => $page->meta_keywords,
-            'metaDescription' => $page->meta_description,
-        ]);
+        return view('contacts', compact('metaDto'));
     }
 
-    public function storeSupportMessage(SupportMessageRequest $request)
+    /**
+     * Store support message.
+     * 
+     * @param \App\Http\Requests\SupportMessageRequest          $request     Request object.
+     * @param \App\Repositories\Eloquent\Core\SupportRepository $supportRepo Support repository.
+     * 
+     * @return string JSON string.
+     */
+    public function storeSupportMessage(SupportMessageRequest $request, SupportRepository $supportRepo)
     {
         $response = [
-            'status' => false,
+            'status'  => false,
             'content' => view('modals.base_content', [
-                'modalBodyText' => 'Произошла ошибка, попробуйте позже',
+                'modalBodyText'   => 'Произошла ошибка, попробуйте позже',
                 'modalHeaderText' => 'Ошибка',
             ])->render(),
         ];
 
-        if (Support::create($request->all())) {
-            $response[ 'status' ] = true;
+        $supportData = $this->homeService->getDataForSupportMessageFromRequest($request);
+
+        if ($supportRepo->create($supportData)) {
+            $response[ 'status' ]  = true;
             $response[ 'content' ] = view('modals.base_content', [
-                'modalBodyText' => 'Ваша заявка в обработке, пожалуйста ожидайте ответа',
+                'modalBodyText'   => 'Ваша заявка в обработке, пожалуйста ожидайте ответа',
                 'modalHeaderText' => 'Успешно отправлено',
             ])->render();
         }
