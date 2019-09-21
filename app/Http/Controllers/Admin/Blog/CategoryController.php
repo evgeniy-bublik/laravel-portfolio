@@ -6,38 +6,39 @@ use DataTables;
 use App\Models\Blog\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminBlogCategoryCreateRequest;
-use App\Http\Requests\AdminBlogCategoryUpdateRequest;
-use App\Services\BlogService;
+use App\Http\Requests\Admin\Blog\Category\{CreateRequest, UpdateRequest};
+use App\Services\Admin\Blog\CategoryService;
+use App\Repositories\Eloquent\Blog\CategoryRepository;
 
 class CategoryController extends Controller
 {
     /**
-     * Blog service object.
+     * Category blog service object.
      * 
      * @access protected
      * 
-     * @var App\Services\BlogService $blogService
+     * @var \App\Services\Admin\Blog\CategoryService $categoryService
      */
-    protected $blogService;
+    protected $categoryService;
 
     /**
      * Constructor.
      * 
-     * @param App\Services\BlogService $blogService Blog service class.
+     * @param \App\Services\Admin\Blog\CategoryService $categoryService Category blog service class.
      * 
      * @return void
      */
-    public function __construct(BlogService $blogService)
+    public function __construct(CategoryService $categoryService)
     {
-        $this->blogService = $blogService;
+        $this->categoryService = $categoryService;
     }
 
     /**
      * Display blog categories page.
      *
-     * @param \Illuminate\Http\Request $request Request.
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request $request Request object.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
     public function index(Request $request)
     {
@@ -47,16 +48,18 @@ class CategoryController extends Controller
     /**
      * Get datatable data categories.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param Illuminate\Http\Request                            $request      Request object.
+     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Blog category repository.
+     * 
      * @return null|string JSON.
      */
-    public function getDataTable(Request $request)
+    public function getDataTable(Request $request, CategoryRepository $categoryRepo)
     {
         if (!$request->ajax()) {
             return null;
         }
 
-        $query = Category::query();
+        $query = $categoryRepo->getModel()->query();
 
         return DataTables::eloquent($query)
             ->addColumn('actions', 'admin.blog.category.datatable_actions_column')
@@ -67,8 +70,9 @@ class CategoryController extends Controller
     /**
      * Display blog category create form.
      *
-     * @param \Illuminate\Http\Request $request Request.
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request $request Request.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
     public function create(Request $request)
     {
@@ -78,12 +82,16 @@ class CategoryController extends Controller
     /**
      * Create new blog category.
      *
-     * @param \App\Http\Requests\AdminBlogCategoryCreateRequest $request Form request.
-     * @return \Illuminate\Support\Facades\Redirect
+     * @param \App\Http\Requests\Admin\Blog\Category\CreateRequest $request      Form request.
+     * @param \App\Repositories\Eloquent\Blog\CategoryRepository   $categoryRepo Blog category repository.
+     * 
+     * @return Illuminate\Support\Facades\Redirect
      */
-    public function store(AdminBlogCategoryCreateRequest $request)
+    public function store(CreateRequest $request, CategoryRepository $categoryRepo)
     {
-        $this->blogService->saveBlogCategory($request->except(['_token']));
+        $fields = $this->categoryService->getStoreDataFromRequest($request);
+
+        $categoryRepo->create($fields);
 
         return redirect()->route('admin.blog.categories.index');
     }
@@ -91,9 +99,10 @@ class CategoryController extends Controller
     /**
      * Display blog category edit form.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param Illuminate\Http\Request   $request  Request object.
      * @param \App\Models\Blog\Category $category Blog category model.
-     * @return \Illuminate\Support\Facades\View
+     * 
+     * @return Illuminate\Support\Facades\View
      */
     public function edit(Request $request, Category $category)
     {
@@ -103,13 +112,16 @@ class CategoryController extends Controller
     /**
      * Update blog category.
      *
-     * @param \App\Http\Requests\AdminBlogCategoryUpdateRequest $request Form request.
-     * @param \App\Models\Blog\Category $category Blog category model.
-     * @return \Illuminate\Support\Facades\Redirect
+     * @param \App\Http\Requests\Admin\Blog\Category\UpdateRequest $request  Form request.
+     * @param \App\Models\Blog\Category                            $category Blog category model.
+     * 
+     * @return Illuminate\Support\Facades\Redirect
      */
-    public function update(AdminBlogCategoryUpdateRequest $request, Category $category)
+    public function update(UpdateRequest $request, Category $category)
     {
-        $this->blogService->updateBlogCategory($category, $request->except(['_token']));
+        $fields = $this->categoryService->getStoreDataFromRequest($request);
+
+        $category->update($fields);
 
         return redirect()->route('admin.blog.categories.index');
     }
@@ -117,9 +129,10 @@ class CategoryController extends Controller
     /**
      * Delete blog category.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param Illuminate\Http\Request   $request  Request object.
      * @param \App\Models\Blog\Category $category Blog category model.
-     * @return \Illuminate\Support\Facades\Redirect
+     * 
+     * @return Illuminate\Support\Facades\Redirect
      */
     public function delete(Request $request, Category $category)
     {

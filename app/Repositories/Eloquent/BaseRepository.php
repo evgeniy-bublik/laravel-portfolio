@@ -122,6 +122,19 @@ abstract class BaseRepository
     }
 
     /**
+     * Get collection models by where in condition.
+     * 
+     * @param string $column Column name.
+     * @param array  $list   Search array data.
+     * 
+     * @return
+     */
+    public function whereInCollection($column, $list)
+    {
+        return $this->model->whereIn($column, $list)->get();
+    }
+
+    /**
      * Create model.
      * 
      * @param array $fields Model fields.

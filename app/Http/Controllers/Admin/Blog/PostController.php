@@ -10,38 +10,39 @@ use App\Models\Blog\Tag;
 use App\Models\Blog\PostTag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminBlogPostCreateRequest;
-use App\Http\Requests\AdminBlogPostUpdateRequest;
-use App\Services\BlogService;
+use App\Http\Requests\Admin\Blog\Post\{CreateRequest, UpdateRequest};
+use App\Services\Admin\Blog\PostService;
+use App\Repositories\Eloquent\Blog\{PostRepository, CategoryRepository, TagRepository};
 
 class PostController extends Controller
 {
     /**
-     * Blog service object.
+     * Blog post service object.
      * 
      * @access protected
      * 
-     * @var App\Services\BlogService $blogService
+     * @var \App\Services\Admin\Blog\PostService $postService
      */
-    protected $blogService;
+    protected $postService;
 
     /**
      * Constructor.
      * 
-     * @param App\Services\BlogService $blogService Blog service class.
+     * @param \App\Services\Admin\Blog\PostService $postService Blog service class.
      * 
      * @return void
      */
-    public function __construct(BlogService $blogService)
+    public function __construct(PostService $postService)
     {
-        $this->blogService = $blogService;
+        $this->postService = $postService;
     }
 
     /**
      * Display blog posts page.
      *
-     * @param \Illuminate\Http\Request $request Request.
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request $request Request object.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
     public function index(Request $request)
     {
@@ -51,16 +52,18 @@ class PostController extends Controller
     /**
      * Get datatable data posts.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param Illuminate\Http\Request                        $request  Request object.
+     * @param \App\Repositories\Eloquent\Blog\PostRepository $postRepo Blog post repository.
+     * 
      * @return null|string JSON.
      */
-    public function getDataTable(Request $request)
+    public function getDataTable(Request $request, PostRepository $postRepo)
     {
         if (!$request->ajax()) {
             return null;
         }
 
-        $query = Post::query();
+        $query = $postRepo->getModel()->query();
 
         return DataTables::eloquent($query)
             ->addColumn('actions', 'admin.blog.post.datatable_actions_column')
@@ -71,31 +74,45 @@ class PostController extends Controller
     /**
      * Display blog post create form.
      *
-     * @param \Illuminate\Http\Request $request Request.
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request                            $request      Request object.
+     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Blog category repository.
+     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Blog tag repository.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
-    public function create(Request $request)
+    public function create(Request $request, CategoryRepository $categoryRepo, TagRepository $tagRepo)
     {
         return view('admin.blog.post.create', [
-            'listCategories' => $this->blogService->getCategoriesList(),
-            'listTags' => $this->blogService->getListTags(),
+            'listCategories' => $categoryRepo->collection(),
+            'listTags'       => $tagRepo->collection(),
         ]);
     }
 
     /**
      * Create new blog post.
      *
-     * @param \App\Http\Requests\AdminBlogPostCreateRequest $request Form request.
-     * @return \Illuminate\Support\Facades\Redirect
+     * @param \App\Http\Requests\Admin\Blog\Post\CreateRequest $request  Form request.
+     * @param \App\Repositories\Eloquent\Blog\PostRepository   $postRepo Blog post repository.
+     * @param \App\Repositories\Eloquent\Blog\TagRepository    $tagRepo  Blog tag repository.
+     * 
+     * @return Illuminate\Support\Facades\Redirect
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request, PostRepository $postRepo, TagRepository $tagRepo)
     {
-        $this->blogService->saveBlogPost(
-            $request->except(['_token', 'category_id', 'tags', 'image']),
-            $request->category_id,
-            $request->tags,
-            $request->image
-        );
+        $fields = $this->postService->getStoreDataFromRequest($request);
+        $image  = $this->postService->getImageFromRequest($request);
+
+        $post = $postRepo->create($fields);
+
+        if ($image) {
+            $this->postService->saveImage($post->id, $image);
+        }
+
+        $tagsIds       = $this->postService->getTagIdsFromRequest($request, $tagRepo);
+        $categoriesIds = $this->postService->getCategoriesIdsFromRequest($request);
+
+        $post->tags()->sync($tagsIds);
+        $post->categories()->sync($categoriesIds);
 
         return redirect()->route('admin.blog.posts.index');
     }
@@ -103,35 +120,48 @@ class PostController extends Controller
     /**
      * Display blog post edit form.
      *
-     * @param \Illuminate\Http\Request $request Request.
-     * @param \App\Models\Blog\Post $post Blog post model.
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request                            $request      Request object.
+     * @param \App\Models\Blog\Post                              $post         Blog post model.
+     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Blog category repository.
+     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Blog tag repository.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
-    public function edit(Request $request, Post $post)
+    public function edit(Request $request, Post $post, CategoryRepository $categoryRepo, TagRepository $tagRepo)
     {
         return view('admin.blog.post.edit', [
-            'post' => $post,
-            'listCategories' => $this->blogService->getCategoriesList(),
-            'listTags' => $this->blogService->getListTags(),
+            'post'           => $post,
+            'listCategories' => $categoryRepo->collection(),
+            'listTags'       => $tagRepo->collection()
         ]);
     }
 
     /**
      * Update blog post.
      *
-     * @param \App\Http\Requests\AdminBlogPostUpdateRequest $request Form request.
-     * @param \App\Models\Blog\Post $post Blog post model.
-     * @return \Illuminate\Support\Facades\Redirect
+     * @param \App\Http\Requests\Admin\Blog\Post\UpdateRequest $request Form request.
+     * @param \App\Models\Blog\Post                            $post    Blog post model.
+     * @param \App\Repositories\Eloquent\Blog\TagRepository    $tagRepo Blog tag repository.
+     * 
+     * @return Illuminate\Support\Facades\Redirect
      */
-    public function update(AdminBlogPostUpdateRequest $request, Post $post)
+    public function update(UpdateRequest $request, Post $post, TagRepository $tagRepo)
     {
-        $this->blogService->updateBlogPost(
-            $post,
-            $request->except(['_token', 'category_id', 'tags', 'image']),
-            $request->category_id,
-            $request->tags,
-            $request->image
-        );
+        $fields = $this->postService->getStoreDataFromRequest($request);
+        $image  = $this->postService->getImageFromRequest($request);
+
+        $post->update($fields);
+
+        if ($image) {
+            $this->postService->deleteImageDir($post->id);
+            $this->postService->saveImage($post->id, $image);
+        }
+
+        $tagsIds       = $this->postService->getTagIdsFromRequest($request, $tagRepo);
+        $categoriesIds = $this->postService->getCategoriesIdsFromRequest($request);
+
+        $post->tags()->sync($tagsIds);
+        $post->categories()->sync($categoriesIds);
 
         return redirect()->route('admin.blog.posts.index');
     }
@@ -139,16 +169,18 @@ class PostController extends Controller
     /**
      * Delete blog post.
      *
-     * @param \Illuminate\Http\Request $request Request.
-     * @param \App\Models\Blog\Post $post Blog post model.
-     * @return \Illuminate\Support\Facades\Redirect
+     * @param Illuminate\Http\Request $request Request object.
+     * @param \App\Models\Blog\Post   $post    Blog post model.
+     * 
+     * @return Illuminate\Support\Facades\Redirect
      */
     public function delete(Request $request, Post $post)
     {
         $post->delete();
 
-        $this->blogService->deletePostImageDir($post->id);
+        $this->postService->deleteImageDir($post->id);
 
         return redirect()->route('admin.blog.posts.index');
     }
+    
 }
