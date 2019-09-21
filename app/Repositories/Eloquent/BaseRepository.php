@@ -126,7 +126,7 @@ abstract class BaseRepository
      * 
      * @param array $fields Model fields.
      * 
-     * @return
+     * @return Illuminate\Database\Eloquent\Model
      */
     public function create($fields)
     {

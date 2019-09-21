@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Portfolio\Category;
 use App\Models\Portfolio\Work;
-use App\Services\SiteCorePageService;
+use App\Services\PortfolioService;
+use App\Repositories\Eloquent\Portfolio\{CategoryRepository, WorkRepository};
+use App\Repositories\Eloquent\Core\{PageRepository};
 
 /**
  * Portfolio work controller.
@@ -14,53 +16,66 @@ use App\Services\SiteCorePageService;
 class WorkController extends Controller
 {
     /**
-     * Site page service.
+     * Portfolio service.
      *
      * @access private
-     * @var \App\Services\SiteCorePageService $sitePageService
+     * 
+     * @var \App\Services\PortfolioService $portfolioService.
      */
-    private $sitePageService;
+    private $portfolioService;
 
     /**
-     * {$inheritdoc}
+     * {@inheritdoc}
      *
+     * @param \App\Services\PortfolioService $portfolioService $portfolioService Portfolio service.
+     * 
      * @return void
      */
-    public function __construct(SiteCorePageService $sitePageService)
+    public function __construct(PortfolioService $portfolioService)
     {
-        $this->sitePageService = $sitePageService;
+        $this->portfolioService = $portfolioService;
     }
 
     /**
      * Display index page.
      *
-     * @param \Illuminate\Http\Request $request Request
+     * @param \Illuminate\Http\Request                                $request      Request object.
+     * @param \App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
+     * @param \App\Repositories\Eloquent\Portfolio\WorkRepository     $workRepo     Portfolio work repository.
+     * @param \App\Repositories\Eloquent\Core\PageRepository          $pageRepo     Core page repository.
+     * 
      * @return \Illuminate\Support\Facades\View
      */
-    public function index(Request $request)
-    {
-        $page = $this->sitePageService->getPortfolioPage();
+    public function index(
+        Request $request,
+        CategoryRepository $categoryRepo,
+        WorkRepository $workRepo,
+        PageRepository $pageRepo
+    ) {
+        $page    = $pageRepo->getPortfolioIndexPage();
+        $metaDto = ($page) ? $this->portfolioService->getMetaFromPage($page) : $this->portfolioService->getEmptyMetaObject();
 
         return view('portfolio.index', [
-            'categories' => Category::active()->orderBy('display_order', 'desc')->get(),
-            'works' => Work::active()->orderBy('date', 'desc')->paginate(),
-            'metaTitle' => $page->meta_title,
-            'metaKeywords' => $page->meta_keywords,
-            'metaDescription' => $page->meta_description,
+            'categories' => $categoryRepo->getActiveItems(),
+            'works'      => $workRepo->getActiveItems(),
+            'metaDto'    => $metaDto,
         ]);
     }
 
     /**
      * Display item portfolio work.
      *
-     * @param \Illuminate\Http\Request $request Request
-     * @param string $itemSlug Portfolio work slug
+     * @param \Illuminate\Http\Request                            $request  Request object.
+     * @param \App\Repositories\Eloquent\Portfolio\WorkRepository $workRepo Portfolio work repository.
+     * @param string                                              $itemSlug Portfolio work slug.
+     * 
      * @return \Illuminate\Support\Facades\View
      */
-    public function portfolioWork(Request $request, $itemSlug)
+    public function portfolioWork(Request $request, WorkRepository $workRepo, $itemSlug)
     {
-        $work = Work::active()->where('slug', $itemSlug)->firstOrFail();
+        $work    = $workRepo->findActiveWorkBySlug($itemSlug);
+        $metaDto = $this->portfolioService->getMetaDtoFromWork($work);
 
-        return view('portfolio.item', compact('work'));
+        return view('portfolio.item', compact('work', 'metaDto'));
     }
 }

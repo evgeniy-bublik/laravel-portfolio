@@ -5,33 +5,14 @@ namespace App\Services;
 use App\Models\SiteCorePage;
 use App\DTOs\Core\MetaDTO;
 use App\Http\Requests\SupportMessageRequest;
+use App\Traits\Meta;
 
 /**
  * Site home service.
  */
 class HomeService
 {
-    /**
-     * Get meta dto from page.
-     * 
-     * @return \App\DTOs\Core\MetaDTO
-     */
-    public function getEmptyMetaObject()
-    {
-        return new MetaDTO();
-    }
-
-    /**
-     * Get meta from page object.
-     * 
-     * @param \App\Models\SiteCorePage $page Page object.
-     * 
-     * @return \App\DTOs\Core\MetaDTO
-     */
-    public function getMetaFromPage($page)
-    {
-        return MetaDTO::createObjectFromPageModel($page);
-    }
+    use Meta;
 
     /**
      * Get support message data from request.

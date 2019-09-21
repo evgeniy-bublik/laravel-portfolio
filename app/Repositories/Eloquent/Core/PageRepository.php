@@ -38,6 +38,16 @@ class PageRepository extends BaseRepository
     }
 
     /**
+     * Get portfolio page model.
+     * 
+     * @return \App\Models\SiteCorePage|null
+     */
+    public function getPortfolioIndexPage()
+    {
+        return $this->findSitePageByCode(SiteCorePage::PAGE_PORTFOLIO_CODE);
+    }
+
+    /**
      * Find object page.
      *
      * @access protected

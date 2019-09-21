@@ -6,9 +6,9 @@ use DataTables;
 use App\Models\Portfolio\Work;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminPortfolioWorkCreateRequest;
-use App\Http\Requests\AdminPortfolioWorkUpdateRequest;
-use App\Services\PortfolioService;
+use App\Http\Requests\Admin\Portfolio\{WorkCreateRequest, WorkUpdateRequest};
+use App\Services\Admin\Portfolio\WorkService;
+use App\Repositories\Eloquent\Portfolio\{WorkRepository, CategoryRepository};
 
 /**
  * Admin portfolio work controller.
@@ -16,24 +16,24 @@ use App\Services\PortfolioService;
 class WorkController extends Controller
 {
     /**
-     * Portfolio service object.
+     * Portfolio work service object.
      * 
      * @access protected
      * 
-     * @var App\Services\PortfolioService $portfolioService
+     * @var App\Services\Admin\Portfolio\WorkService $workService
      */
-    protected $portfolioService;
+    protected $workService;
 
     /**
      * Constructor.
      * 
-     * @param App\Services\PortfolioService $portfolioService Portfolio service class.
+     * @param App\Services\Admin\Portfolio\WorkService $workService Portfolio work service class.
      * 
      * @return void
      */
-    public function __construct(PortfolioService $portfolioService)
+    public function __construct(WorkService $workService)
     {
-        $this->portfolioService = $portfolioService;
+        $this->workService = $workService;
     }
 
     /**
@@ -51,17 +51,18 @@ class WorkController extends Controller
     /**
      * Get datatable data works.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param \Illuminate\Http\Request                            $request  Request object.
+     * @param \App\Repositories\Eloquent\Portfolio\WorkRepository $workRepo Work repository.
      * 
      * @return null|string JSON.
      */
-    public function getDataTable(Request $request)
+    public function getDataTable(Request $request, WorkRepository $workRepo)
     {
         if (!$request->ajax()) {
             return null;
         }
 
-        $query = Work::query();
+        $query = $workRepo->getModel()->query();
 
         return DataTables::eloquent($query)
             ->addColumn('actions', 'admin.portfolio.work.datatable_actions_column')
@@ -72,39 +73,34 @@ class WorkController extends Controller
     /**
      * Display portfolio work create form.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param \Illuminate\Http\Request                                $request      Request Object.
+     * @param \App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
      * 
      * @return \Illuminate\Support\Facades\View
      */
-    public function create(Request $request)
+    public function create(Request $request, CategoryRepository $categoryRepo)
     {
         return view('admin.portfolio.work.create', [
-            'listCategories' => $this->portfolioService->getListCategories(),
+            'listCategories' => $categoryRepo->collection(),
         ]);
     }
 
     /**
      * Create new portfolio work.
      *
-     * @param \App\Http\Requests\AdminPortfolioWorkCreateRequest $request Form request.
+     * @param \App\Http\Requests\Admin\Portfolio\WorkCreateRequest $request Form request.
      * 
      * @return \Illuminate\Support\Facades\Redirect
      */
-    public function store(AdminPortfolioWorkCreateRequest $request)
+    public function store(WorkCreateRequest $request, WorkRepository $workRepo)
     {
-        $this->portfolioService->createPortfolioWork($request->only([
-            'category_id',
-            'name',
-            'slug',
-            'description',
-            'url',
-            'date',
-            'technologies',
-            'active',
-            'meta_title',
-            'meta_keywords',
-            'meta_description',
-        ]), $request->file('image'));
+        $image  = $this->workService->getImageFromRequest($request);
+        $fields = $this->workService->getStoreDataFromRequest($request);
+        $model  = $workRepo->create($fields);
+
+        if ($model) {
+            $this->workService->saveImage($model, $image);
+        }
 
         return redirect()->route('admin.portfolio.works.index');
     }
@@ -112,42 +108,39 @@ class WorkController extends Controller
     /**
      * Display portfolio work edit form.
      *
-     * @param \Illuminate\Http\Request $request Request.
-     * @param \App\Models\Portfolio\Work $work Portfolio work model.
+     * @param \Illuminate\Http\Request                                $request      Request object.
+     * @param \App\Models\Portfolio\Work                              $work         Portfolio work model.
+     * @param \App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
      * 
      * @return \Illuminate\Support\Facades\View
      */
-    public function edit(Request $request, Work $work)
+    public function edit(Request $request, Work $work, CategoryRepository $categoryRepo)
     {
         return view('admin.portfolio.work.edit', [
-            'work' => $work,
-            'listCategories' => $this->portfolioService->getListCategories(),
+            'work'           => $work,
+            'listCategories' => $categoryRepo->collection(),
         ]);
     }
 
     /**
      * Update portfolio work.
      *
-     * @param \App\Http\Requests\AdminPortfolioWorkUpdateRequest $request Form request.
-     * @param \App\Models\Portfolio\Work $work Portfolio work model.
+     * @param \App\Http\Requests\Admin\Portfolio\WorkUpdateRequest $request Form request.
+     * @param \App\Models\Portfolio\Work                           $work    Portfolio work model.
      * 
      * @return \Illuminate\Support\Facades\Redirect
      */
-    public function update(AdminPortfolioWorkUpdateRequest $request, Work $work)
+    public function update(WorkUpdateRequest $request, Work $work)
     {
-        $this->portfolioService->updatePortfolioWork($work, $request->only([
-            'category_id',
-            'name',
-            'slug',
-            'description',
-            'url',
-            'date',
-            'technologies',
-            'active',
-            'meta_title',
-            'meta_keywords',
-            'meta_description',
-        ]), $request->file('image'));
+        $image  = $this->workService->getImageFromRequest($request);
+        $fields = $this->workService->getStoreDataFromRequest($request);
+
+        $work->update($fields);
+
+        if ($image) {
+            $this->workService->deleteImageDir($work->id);
+            $this->workService->saveImage($work, $image);
+        }
 
         return redirect()->route('admin.portfolio.works.index');
     }
@@ -155,8 +148,8 @@ class WorkController extends Controller
     /**
      * Delete portfolio work.
      *
-     * @param \Illuminate\Http\Request $request Request.
-     * @param \App\Models\Portfolio\Work $work Portfolio work model.
+     * @param \Illuminate\Http\Request   $request Request object.
+     * @param \App\Models\Portfolio\Work $work    Portfolio work model.
      * 
      * @return \Illuminate\Support\Facades\Redirect
      */
@@ -164,7 +157,7 @@ class WorkController extends Controller
     {
         $work->delete();
 
-        $this->portfolioService->deleteWorkImageDir($work->id);
+        $this->workService->deleteImageDir($work->id);
 
         return redirect()->route('admin.portfolio.works.index');
     }

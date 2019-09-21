@@ -9,8 +9,22 @@ use Illuminate\Support\Facades\Storage;
 
 class Work extends Model
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @access protected
+     *  
+     * @var string $table.
+     */
     protected $table = 'portfolio_works';
 
+    /**
+     * {@inheritdoc}
+     * 
+     * @access protected
+     * 
+     * @var array $fillable.
+     */
     protected $fillable = [
         'category_id',
         'name',
@@ -25,7 +39,12 @@ class Work extends Model
         'meta_description',
     ];
 
-    const FILE_PATH = 'portfolio/{id}';
+    /**
+     * Path to work images.
+     * 
+     * @var string
+     */
+    const FILE_PATH = 'portfolio/works/{id}';
 
     /**
      * Scope for get portfolio works by active field.

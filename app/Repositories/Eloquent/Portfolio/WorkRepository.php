@@ -26,4 +26,14 @@ class WorkRepository extends BaseRepository
     {
         return $this->model->active()->orderBy('date', 'desc')->paginate();
     }
+
+    /**
+     * Find active portfolio work by slug or fail.
+     * 
+     * @return \App\Models\Portfolio\Work
+     */
+    public function findActiveWorkBySlug($slug)
+    {
+        return $this->model->active()->where('slug', $slug)->firstOrFail();
+    }
 }
