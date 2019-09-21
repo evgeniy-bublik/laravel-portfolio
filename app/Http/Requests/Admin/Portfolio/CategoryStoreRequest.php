@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Portfolio;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminPortfolioCategoryRequest extends FormRequest
+class CategoryStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class AdminPortfolioCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name'          => 'required|string|max:255',
             'display_order' => 'integer|min:0',
         ];
     }

@@ -6,8 +6,9 @@ use DataTables;
 use App\Models\Portfolio\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminPortfolioCategoryRequest;
-use App\Services\PortfolioService;
+use App\Http\Requests\Admin\Portfolio\CategoryStoreRequest;
+use App\Services\Admin\Portfolio\CategoryService;
+use App\Repositories\Eloquent\Portfolio\CategoryRepository;
 
 /**
  * Admin portfolio category controller.
@@ -15,30 +16,31 @@ use App\Services\PortfolioService;
 class CategoryController extends Controller
 {
     /**
-     * Portfolio service object.
+     * Admin portfolio category service.
      * 
      * @access protected
      * 
-     * @var App\Services\PortfolioService $portfolioService
+     * @var \App\Services\Admin\Portfolio\CategoryService $categoryService.
      */
-    protected $portfolioService;
+    protected $categoryService;
 
     /**
      * Constructor.
      * 
-     * @param App\Services\PortfolioService $portfolioService Portfolio service class.
+     * @param \App\Services\Admin\Portfolio\CategoryService $categoryService Admin portfolio category service.
      * 
      * @return void
      */
-    public function __construct(PortfolioService $portfolioService)
+    public function __construct(CategoryService $categoryService)
     {
-        $this->portfolioService = $portfolioService;
+        $this->categoryService = $categoryService;
     }
 
     /**
      * Display portfolio categories page.
      *
      * @param \Illuminate\Http\Request $request Request.
+     * 
      * @return \Illuminate\Support\Facades\View
      */
     public function index(Request $request)
@@ -49,16 +51,18 @@ class CategoryController extends Controller
     /**
      * Get datatable data categories.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param \Illuminate\Http\Request                       $request      Request object.
+     * @param \App\Repositories\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
+     * 
      * @return null|string JSON.
      */
-    public function getDataTable(Request $request)
+    public function getDataTable(Request $request, CategoryRepository $categoryRepo)
     {
         if (!$request->ajax()) {
             return null;
         }
 
-        $query = Category::query();
+        $query = $categoryRepo->getModel()->query();
 
         return DataTables::eloquent($query)
             ->addColumn('actions', 'admin.portfolio.category.datatable_actions_column')
@@ -69,7 +73,8 @@ class CategoryController extends Controller
     /**
      * Display portfolio category create form.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param \Illuminate\Http\Request $request Request object.
+     * 
      * @return \Illuminate\Support\Facades\View
      */
     public function create(Request $request)
@@ -80,12 +85,16 @@ class CategoryController extends Controller
     /**
      * Create new portfolio category.
      *
-     * @param \App\Http\Requests\AdminPortfolioCategoryRequest $request Form request.
+     * @param \App\Http\Requests\Admin\Portfolio\CategoryStoreRequest $request      Form request.
+     * @param \App\Repositories\Portfolio\CategoryRepository          $categoryRepo Portfolio category repository.
+     * 
      * @return \Illuminate\Support\Facades\Redirect
      */
-    public function store(AdminPortfolioCategoryRequest $request)
+    public function store(CategoryStoreRequest $request, CategoryRepository $categoryRepo)
     {
-        $this->portfolioService->createPortfolioCategory($request->only(['name', 'display_order', 'active']));
+        $categoryData = $this->categoryService->getStoreDataFromRequest($request);
+
+        $categoryRepo->create($categoryData);
 
         return redirect()->route('admin.portfolio.categories.index');
     }
@@ -93,8 +102,9 @@ class CategoryController extends Controller
     /**
      * Display portfolio category edit form.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param \Illuminate\Http\Request       $request  Request object.
      * @param \App\Models\Portfolio\Category $category Portfolio category model.
+     * 
      * @return \Illuminate\Support\Facades\View
      */
     public function edit(Request $request, Category $category)
@@ -105,13 +115,16 @@ class CategoryController extends Controller
     /**
      * Update portfolio category.
      *
-     * @param \App\Http\Requests\AdminPortfolioCategoryRequest $request Form request.
-     * @param \App\Models\Portfolio\Category $category Portfolio category model.
+     * @param \App\Http\Requests\CategoryStoreRequest $request  Form request.
+     * @param \App\Models\Portfolio\Category          $category Portfolio category model.
+     * 
      * @return \Illuminate\Support\Facades\Redirect
      */
-    public function update(AdminPortfolioCategoryRequest $request, Category $category)
+    public function update(CategoryStoreRequest $request, Category $category)
     {
-        $this->portfolioService->createPortfolioCategory($category, $request->only(['name', 'display_order', 'active']));
+        $categoryData = $this->categoryService->getStoreDataFromRequest($request);
+
+        $category->update($categoryData);
 
         return redirect()->route('admin.portfolio.categories.index');
     }
@@ -119,8 +132,9 @@ class CategoryController extends Controller
     /**
      * Delete portfolio category.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param \Illuminate\Http\Request       $request  Request object.
      * @param \App\Models\Portfolio\Category $category Portfolio category model.
+     * 
      * @return \Illuminate\Support\Facades\Redirect
      */
     public function delete(Request $request, Category $category)

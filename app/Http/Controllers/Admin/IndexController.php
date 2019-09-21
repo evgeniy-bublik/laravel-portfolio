@@ -14,6 +14,7 @@ class IndexController extends Controller
      * Display index page.
      *
      * @param \Illuminate\Http\Request $request Request
+     * 
      * @return \Illuminate\Support\Facades\View
      */
     public function index(Request $request)
