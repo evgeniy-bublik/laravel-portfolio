@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Blog\Post;
-use App\Models\Blog\Tag;
-use App\Models\Blog\Category;
 use App\Models\Blog\PostUniqueView;
-use App\Http\Requests\PostCommentRequest;
-use App\Models\Blog\Comment;
-use App\Services\SiteCorePageService;
+use App\Http\Requests\AddCommentRequest;
+use App\Services\PostService;
+use App\Repositories\Eloquent\Core\{PageRepository};
+use App\Repositories\Eloquent\Blog\{PostRepository, CategoryRepository, TagRepository, CommentRepository};
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * Post controller.
@@ -18,146 +18,197 @@ use App\Services\SiteCorePageService;
 class PostController extends Controller
 {
     /**
-     * Site page service.
+     * Blog service.
      *
      * @access private
-     * @var \App\Services\SiteCorePageService $sitePageService
+     * 
+     * @var \App\Services\PostService $postService
      */
-    private $sitePageService;
+    private $postService;
 
     /**
      * {$inheritdoc}
      *
      * @return void
      */
-    public function __construct(SiteCorePageService $sitePageService)
+    public function __construct(PostService $postService)
     {
-        $this->sitePageService = $sitePageService;
+        $this->postService = $postService;
     }
 
     /**
      * Display page with all posts.
      *
-     * @param \Illuminate\Http\Request $request Request
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request                            $request      Request object.
+     * @param \App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
+     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
+     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Post tag repository.
+     * @param \App\Repositories\Eloquent\Core\PageRepository     $pageRepo     Core page repository.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
-    public function index(Request $request)
-    {
-        $page = $this->sitePageService->getBlogPage();
+    public function index(
+        Request $request,
+        PostRepository $postRepo,
+        CategoryRepository $categoryRepo,
+        TagRepository $tagRepo,
+        PageRepository $pageRepo
+    ) {
+        $page    = $pageRepo->getBlogIndexPage();
+        $metaDto = ($page) ? $this->postService->getMetaFromPage($page) : $this->postService->getEmptyMetaObject();
 
         return view('post.index', [
-            'posts' => Post::visible()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
-            'listTags' => Tag::active()->get(),
-            'activeTagId' => 0,
-            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
+            'posts'            => $postRepo->getVisiblePostsWithComments(),
+            'listTags'         => $tagRepo->getActiveTags(),
+            'activeTagId'      => 0,
+            'categories'       => $categoryRepo->getActiveCategoriesWithCountPosts(),
             'activeCategoryId' => 0,
-            'metaTitle' => $page->meta_title,
-            'metaKeywords' => $page->meta_keywords,
-            'metaDescription' => $page->meta_description,
+            'metaDto'          => $metaDto,
         ]);
     }
 
     /**
      * Display page single post.
      *
-     * @param \Illuminate\Http\Request $request Request
-     * @param string $slug Post slug.
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request                            $request      Request object.
+     * @param \App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
+     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
+     * @param string                                             $slug         Post slug.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
-    public function item(Request $request, $slug)
-    {
-        $post = Post::where('slug', $slug)->visible()->with(['tags' => function($query) { return $query->active(); }, 'comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->firstOrFail();
+    public function item(
+        Request $request,
+        PostRepository $postRepo,
+        CategoryRepository $categoryRepo,
+        $slug
+    ) {
+        $post    = $postRepo->findPostBySlugWithTagsAndCommentsOrFail($slug);
+        $ip      = $request->ip();
+        $metaDto = $this->postService->getMetaDtoFromModel($post);
 
         $post->increment('total_views');
-
-        $ip = $request->ip();
 
         if (!PostUniqueView::where('ip', $ip)->where('post_id', $post->id)->count()) {
             PostUniqueView::create([
                 'post_id' => $post->id,
-                'ip' => $ip,
+                'ip'      => $ip,
             ]);
 
             $post->increment('unique_views');
         }
 
         return view('post.item', [
-            'post' => $post,
-            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
+            'post'       => $post,
+            'categories' => $categoryRepo->getActiveCategoriesWithCountPosts(),
+            'metaDto'    => $metaDto,
         ]);
     }
 
     /**
      * Display page with posts by category.
      *
-     * @param \Illuminate\Http\Request $request Request
-     * @param string $categorySlug Category slug.
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request                            $request      Request object.
+     * @param \App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
+     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
+     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Post tag repository.
+     * @param string                                             $categorySlug Category slug.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
-    public function byCategory(Request $request, $categorySlug)
-    {
-        $category = Category::active()->where('slug', $categorySlug)->firstOrFail();
+    public function byCategory(
+        Request $request,
+        PostRepository $postRepo,
+        CategoryRepository $categoryRepo,
+        TagRepository $tagRepo,
+        $categorySlug
+    ) {
+        $category = $categoryRepo->findBySlugOrFail($categorySlug);
+        $metaDto  = $this->postService->getMetaDtoFromModel($category);
 
         return view('post.index', [
-            'posts' => $category->posts()->visible()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
-            'listTags' => Tag::active()->get(),
-            'activeTagId' => 0,
-            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
+            'posts'            => $postRepo->getPostByRelatedModel($category),
+            'listTags'         => $tagRepo->getActiveTags(),
+            'activeTagId'      => 0,
+            'categories'       => $categoryRepo->getActiveCategoriesWithCountPosts(),
             'activeCategoryId' => $category->id,
-            'metaTitle' => $category->meta_title,
-            'metaKeywords' => $category->meta_keywords,
-            'metaDescription' => $category->meta_description,
+            'metaDto'          => $metaDto,
         ]);
     }
 
     /**
      * Display page with posts by tag.
      *
-     * @param \Illuminate\Http\Request $request Request
-     * @param string $tagSlug Tag slug.
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request                            $request      Request object.
+     * @param \App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
+     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
+     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Post tag repository.
+     * @param string                                             $tagSlug      Tag slug.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
-    public function byTag(Request $request, $tagSlug)
-    {
-        $tag = Tag::active()->where('slug', $tagSlug)->firstOrFail();
+    public function byTag(
+        Request $request,
+        PostRepository $postRepo,
+        CategoryRepository $categoryRepo,
+        TagRepository $tagRepo,
+        $tagSlug
+    ) {
+        $tag     = $tagRepo->findBySlugOrFail($tagSlug);
+        $metaDto = $this->postService->getMetaDtoFromModel($tag);
 
         return view('post.index', [
-            'posts' => $tag->posts()->visible()->with(['comments' => function($query) { return $query->active(); }])->withCount(['comments' => function($query) { return $query->active(); }])->paginate(Post::LIMIT_POSTS_ON_PAGE),
-            'listTags' => Tag::active()->get(),
-            'activeTagId' => $tag->id,
-            'categories' => Category::active()->withCount(['posts' => function($query) { return $query->visible(); }])->get(),
+            'posts'            => $postRepo->getPostByRelatedModel($tag),
+            'listTags'         => $tagRepo->getActiveTags(),
+            'activeTagId'      => $tag->id,
+            'categories'       => $categoryRepo->getActiveCategoriesWithCountPosts(),
             'activeCategoryId' => 0,
-            'metaTitle' => $tag->meta_title,
-            'metaKeywords' => $tag->meta_keywords,
-            'metaDescription' => $tag->meta_description,
+            'metaDto'          => $metaDto,
         ]);
     }
 
-    public function addComment(PostCommentRequest $request, Post $post)
-    {
+    /**
+     * Add comment to post.
+     * 
+     * @param App\Http\Requests\AddCommentRequest               $request     Form request.
+     * @param \App\Repositories\Eloquent\Blog\PostRepository    $postRepo    Post repository.
+     * @param \App\Repositories\Eloquent\Blog\CommentRepository $commentRepo Post comment repository.
+     * @param int                                               $postId      Post id.
+     * 
+     * @return string JSON string
+     */
+    public function addComment(
+        AddCommentRequest $request,
+        PostRepository $postRepo,
+        CommentRepository $commentRepo,
+        $postId
+    ) {
         $response = [
-            'status' => false,
+            'status'  => false,
             'content' => view('modals.base_content', [
-                'modalBodyText' => 'Произошла ошибка, попробуйте позже',
+                'modalBodyText'   => 'Произошла ошибка, попробуйте позже',
                 'modalHeaderText' => 'Ошибка',
             ])->render(),
         ];
 
-        $request[ 'post_id' ] = $post->id;
+        try {
+            $post = $postRepo->findByIdOrFail($postId);
+        } catch (ModelNotFoundException $e) {
+            return response()->json($response);
+        }
 
-        $comment = new Comment();
+        $request->merge(['post_id' => $postId]);
 
-        $comment->fill($request->all());
-        $comment->post_id = $post->id;
+        $commentData = $this->postService->getFieldsForCommentFromRequest($request);
 
-        if ($comment->save()) {
-            $response[ 'status' ] = true;
+        if ($commentRepo->create($commentData)) {
+            $response[ 'status' ]  = true;
             $response[ 'content' ] = view('modals.base_content', [
-                'modalBodyText' => 'Комментарий добавлен, однако появится он после модерации',
+                'modalBodyText'   => 'Комментарий добавлен, однако появится он после модерации',
                 'modalHeaderText' => 'Комментарий добавлен',
             ])->render();
         }
 
-        return $response;
+        return response()->json($response);
     }
 }

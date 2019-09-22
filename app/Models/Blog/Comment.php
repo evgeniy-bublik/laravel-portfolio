@@ -27,14 +27,16 @@ class Comment extends Model
         'user_name',
         'user_email',
         'text',
+        'post_id',
         'active',
     ];
 
     /**
      * Scope for get comments by active field.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Illuminate\Database\Eloquent\Builder $builder
+     * 
+     * @return Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive(Builder $builder)
     {
@@ -51,6 +53,11 @@ class Comment extends Model
         return (new DateTime($this->attributes[ 'created_at' ]))->format('M d, Y');
     }
 
+    /**
+     * Get post name attribute.
+     * 
+     * @return string|null
+     */
     public function getPostNameAttribute()
     {
         if (!$this->post) {
@@ -60,6 +67,11 @@ class Comment extends Model
         return $this->post->name;
     }
 
+    /**
+     * Relation with post.
+     * 
+     * @return
+     */
     public function post()
     {
         return $this->belongsTo('App\Models\Blog\Post');

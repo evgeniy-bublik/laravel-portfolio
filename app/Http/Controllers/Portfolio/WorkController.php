@@ -39,12 +39,12 @@ class WorkController extends Controller
     /**
      * Display index page.
      *
-     * @param \Illuminate\Http\Request                                $request      Request object.
+     * @param Illuminate\Http\Request                                 $request      Request object.
      * @param \App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
      * @param \App\Repositories\Eloquent\Portfolio\WorkRepository     $workRepo     Portfolio work repository.
      * @param \App\Repositories\Eloquent\Core\PageRepository          $pageRepo     Core page repository.
      * 
-     * @return \Illuminate\Support\Facades\View
+     * @return Illuminate\Support\Facades\View
      */
     public function index(
         Request $request,
@@ -65,16 +65,16 @@ class WorkController extends Controller
     /**
      * Display item portfolio work.
      *
-     * @param \Illuminate\Http\Request                            $request  Request object.
+     * @param Illuminate\Http\Request                             $request  Request object.
      * @param \App\Repositories\Eloquent\Portfolio\WorkRepository $workRepo Portfolio work repository.
      * @param string                                              $itemSlug Portfolio work slug.
      * 
-     * @return \Illuminate\Support\Facades\View
+     * @return Illuminate\Support\Facades\View
      */
     public function portfolioWork(Request $request, WorkRepository $workRepo, $itemSlug)
     {
         $work    = $workRepo->findActiveWorkBySlug($itemSlug);
-        $metaDto = $this->portfolioService->getMetaDtoFromWork($work);
+        $metaDto = $this->portfolioService->getMetaDtoFromModel($work);
 
         return view('portfolio.item', compact('work', 'metaDto'));
     }

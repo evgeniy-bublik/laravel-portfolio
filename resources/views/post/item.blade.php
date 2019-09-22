@@ -1,19 +1,15 @@
 @extends('layouts.main')
 
 @section('title')
-
-{{ $post->meta_title }}
-
+    {{ $metaDto->getTitle() }}
 @stop
+
 @section('meta-keywords')
-
-{{ $post->meta_keywords }}
-
+    {{ $metaDto->getKeywords() }}
 @stop
+
 @section('meta-description')
-
-{{ $post->meta_description }}
-
+    {{ $metaDto->getDescription() }}
 @stop
 
 @section('content')

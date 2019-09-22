@@ -48,6 +48,16 @@ class PageRepository extends BaseRepository
     }
 
     /**
+     * Get blog page model.
+     * 
+     * @return \App\Models\SiteCorePage|null
+     */
+    public function getBlogIndexPage()
+    {
+        return $this->findSitePageByCode(SiteCorePage::PAGE_BLOG_CODE);
+    }
+
+    /**
      * Find object page.
      *
      * @access protected

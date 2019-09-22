@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\DTOs\Core\MetaDTO;
 use App\Models\SiteCorePage;
+use Illuminate\Database\Eloquent\Model;
 
 trait Meta
 {
@@ -27,5 +28,17 @@ trait Meta
     public function getMetaFromPage(SiteCorePage $page)
     {
         return MetaDTO::createObjectFromPageModel($page);
+    }
+
+    /**
+     * Get meta dto from model.
+     * 
+     * @param Illuminate\Database\Eloquent\Model $model Model object.
+     * 
+     * @return \App\DTOs\Core\MetaDTO
+     */
+    public function getMetaDtoFromModel(Model $model)
+    {
+        return new MetaDTO($model->meta_title, $model->meta_keywords, $model->meta_description);
     }
 }

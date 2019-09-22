@@ -28,4 +28,26 @@ class TagRepository extends BaseRepository
     {
         return $this->whereInCollection('name', $names)->pluck('id', 'name')->toArray();
     }
+
+    /**
+     * Get active tags.
+     * 
+     * @return
+     */
+    public function getActiveTags()
+    {
+        return $this->model->active()->get();
+    }
+
+    /**
+     * Find tag by slug or fail.
+     * 
+     * @param string $slug Tag slug.
+     * 
+     * @return
+     */
+    public function findBySlugOrFail($slug)
+    {
+        return $this->model->active()->where('slug', $slug)->firstOrFail();
+    }
 }
