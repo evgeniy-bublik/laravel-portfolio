@@ -6,7 +6,7 @@ use DataTables;
 use App\Models\Portfolio\Work;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Portfolio\{WorkCreateRequest, WorkUpdateRequest};
+use App\Http\Requests\Admin\Portfolio\Work\{CreateRequest, UpdateRequest};
 use App\Services\Admin\Portfolio\WorkService;
 use App\Repositories\Eloquent\Portfolio\{WorkRepository, CategoryRepository};
 
@@ -39,7 +39,7 @@ class WorkController extends Controller
     /**
      * Display portfolio works page.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param Illuminate\Http\Request $request Request object.
      * 
      * @return \Illuminate\Support\Facades\View
      */
@@ -51,8 +51,8 @@ class WorkController extends Controller
     /**
      * Get datatable data works.
      *
-     * @param \Illuminate\Http\Request                            $request  Request object.
-     * @param \App\Repositories\Eloquent\Portfolio\WorkRepository $workRepo Work repository.
+     * @param Illuminate\Http\Request                            $request  Request object.
+     * @param App\Repositories\Eloquent\Portfolio\WorkRepository $workRepo Work repository.
      * 
      * @return null|string JSON.
      */
@@ -73,8 +73,8 @@ class WorkController extends Controller
     /**
      * Display portfolio work create form.
      *
-     * @param \Illuminate\Http\Request                                $request      Request Object.
-     * @param \App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
+     * @param Illuminate\Http\Request                                $request      Request Object.
+     * @param App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
      * 
      * @return \Illuminate\Support\Facades\View
      */
@@ -88,11 +88,11 @@ class WorkController extends Controller
     /**
      * Create new portfolio work.
      *
-     * @param \App\Http\Requests\Admin\Portfolio\WorkCreateRequest $request Form request.
+     * @param App\Http\Requests\Admin\Portfolio\Work\CreateRequest $request Form request.
      * 
      * @return \Illuminate\Support\Facades\Redirect
      */
-    public function store(WorkCreateRequest $request, WorkRepository $workRepo)
+    public function store(CreateRequest $request, WorkRepository $workRepo)
     {
         $image  = $this->workService->getImageFromRequest($request);
         $fields = $this->workService->getStoreDataFromRequest($request);
@@ -108,9 +108,9 @@ class WorkController extends Controller
     /**
      * Display portfolio work edit form.
      *
-     * @param \Illuminate\Http\Request                                $request      Request object.
-     * @param \App\Models\Portfolio\Work                              $work         Portfolio work model.
-     * @param \App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
+     * @param Illuminate\Http\Request                                $request      Request object.
+     * @param App\Models\Portfolio\Work                              $work         Portfolio work model.
+     * @param App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
      * 
      * @return \Illuminate\Support\Facades\View
      */
@@ -125,12 +125,12 @@ class WorkController extends Controller
     /**
      * Update portfolio work.
      *
-     * @param \App\Http\Requests\Admin\Portfolio\WorkUpdateRequest $request Form request.
-     * @param \App\Models\Portfolio\Work                           $work    Portfolio work model.
+     * @param App\Http\Requests\Admin\Portfolio\Work\UpdateRequest $request Form request.
+     * @param App\Models\Portfolio\Work                            $work    Portfolio work model.
      * 
      * @return \Illuminate\Support\Facades\Redirect
      */
-    public function update(WorkUpdateRequest $request, Work $work)
+    public function update(UpdateRequest $request, Work $work)
     {
         $image  = $this->workService->getImageFromRequest($request);
         $fields = $this->workService->getStoreDataFromRequest($request);
@@ -148,8 +148,8 @@ class WorkController extends Controller
     /**
      * Delete portfolio work.
      *
-     * @param \Illuminate\Http\Request   $request Request object.
-     * @param \App\Models\Portfolio\Work $work    Portfolio work model.
+     * @param Illuminate\Http\Request   $request Request object.
+     * @param App\Models\Portfolio\Work $work    Portfolio work model.
      * 
      * @return \Illuminate\Support\Facades\Redirect
      */

@@ -17,14 +17,14 @@ class CategoryController extends Controller
      * 
      * @access protected
      * 
-     * @var \App\Services\Admin\Blog\CategoryService $categoryService
+     * @var App\Services\Admin\Blog\CategoryService $categoryService
      */
     protected $categoryService;
 
     /**
      * Constructor.
      * 
-     * @param \App\Services\Admin\Blog\CategoryService $categoryService Category blog service class.
+     * @param App\Services\Admin\Blog\CategoryService $categoryService Category blog service class.
      * 
      * @return void
      */
@@ -38,7 +38,7 @@ class CategoryController extends Controller
      *
      * @param Illuminate\Http\Request $request Request object.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function index(Request $request)
     {
@@ -48,8 +48,8 @@ class CategoryController extends Controller
     /**
      * Get datatable data categories.
      *
-     * @param Illuminate\Http\Request                            $request      Request object.
-     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Blog category repository.
+     * @param Illuminate\Http\Request                           $request      Request object.
+     * @param App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Blog category repository.
      * 
      * @return null|string JSON.
      */
@@ -72,7 +72,7 @@ class CategoryController extends Controller
      *
      * @param Illuminate\Http\Request $request Request.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function create(Request $request)
     {
@@ -82,10 +82,10 @@ class CategoryController extends Controller
     /**
      * Create new blog category.
      *
-     * @param \App\Http\Requests\Admin\Blog\Category\CreateRequest $request      Form request.
-     * @param \App\Repositories\Eloquent\Blog\CategoryRepository   $categoryRepo Blog category repository.
+     * @param App\Http\Requests\Admin\Blog\Category\CreateRequest $request      Form request.
+     * @param App\Repositories\Eloquent\Blog\CategoryRepository   $categoryRepo Blog category repository.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function store(CreateRequest $request, CategoryRepository $categoryRepo)
     {
@@ -99,10 +99,10 @@ class CategoryController extends Controller
     /**
      * Display blog category edit form.
      *
-     * @param Illuminate\Http\Request   $request  Request object.
-     * @param \App\Models\Blog\Category $category Blog category model.
+     * @param Illuminate\Http\Request  $request  Request object.
+     * @param App\Models\Blog\Category $category Blog category model.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function edit(Request $request, Category $category)
     {
@@ -112,10 +112,10 @@ class CategoryController extends Controller
     /**
      * Update blog category.
      *
-     * @param \App\Http\Requests\Admin\Blog\Category\UpdateRequest $request  Form request.
-     * @param \App\Models\Blog\Category                            $category Blog category model.
+     * @param App\Http\Requests\Admin\Blog\Category\UpdateRequest $request  Form request.
+     * @param App\Models\Blog\Category                            $category Blog category model.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function update(UpdateRequest $request, Category $category)
     {
@@ -129,10 +129,10 @@ class CategoryController extends Controller
     /**
      * Delete blog category.
      *
-     * @param Illuminate\Http\Request   $request  Request object.
-     * @param \App\Models\Blog\Category $category Blog category model.
+     * @param Illuminate\Http\Request  $request  Request object.
+     * @param App\Models\Blog\Category $category Blog category model.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function delete(Request $request, Category $category)
     {

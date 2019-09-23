@@ -26,8 +26,20 @@ class Post extends Model
      */
     const LIMIT_POSTS_ON_PAGE = 15;
 
+    /**
+     * File path for post preview.
+     * 
+     * @var string
+     */
     const FILE_PATH = 'posts/{id}/preview/';
 
+    /**
+     * {@inheritdoc}
+     * 
+     * @access protected
+     * 
+     * @var array $fillable.
+     */
     protected $fillable = [
         'name',
         'slug',
@@ -43,7 +55,8 @@ class Post extends Model
     /**
      * Scope for get visible posts.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Illuminate\Database\Eloquent\Builder $builder Builder object.
+     * 
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeVisible(Builder $builder)
@@ -55,7 +68,8 @@ class Post extends Model
     /**
      * Scope for get posts by active field.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Illuminate\Database\Eloquent\Builder $builder Builder object.
+     * 
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive(Builder $builder)
@@ -66,7 +80,8 @@ class Post extends Model
     /**
      * Scope for get visible posts by date.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Illuminate\Database\Eloquent\Builder $builder Builder object.
+     * 
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeVisibleByDate(Builder $builder)
@@ -77,7 +92,8 @@ class Post extends Model
     /**
      * Scope for get latest visible posts.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param Illuminate\Database\Eloquent\Builder $builder Builder object.
+     * 
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeLatestPosts(Builder $builder, $limit = 2)
@@ -101,7 +117,7 @@ class Post extends Model
     /**
      * Get related posts attribute.
      *
-     * @return App\Models\Blog\Post[]
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getRelatedPostsAttribute()
     {
@@ -111,6 +127,11 @@ class Post extends Model
         })->where('id', '<>', $this->id)->limit(self::LIMIT_RELATED_POSTS)->get();
     }
 
+    /**
+     * Get category attribute.
+     * 
+     * @return \App\Models\Blog\Category|null
+     */
     public function getCategoryAttribute()
     {
         if (!$this->categories) {
@@ -120,6 +141,11 @@ class Post extends Model
         return $this->categories()->first();
     }
 
+    /**
+     * Get category id attribute.
+     * 
+     * @return int|null
+     */
     public function getCategoryIdAttribute()
     {
         if (!$this->category) {
@@ -145,6 +171,11 @@ class Post extends Model
         return '/images/placeholder.png';
     }
 
+    /**
+     * Check if post has image preview.
+     * 
+     * @return bool
+     */
     public function hasImage()
     {
         $files = Storage::disk('local')->files('public/'. self::getFilePath($this->id));
@@ -169,11 +200,23 @@ class Post extends Model
         ]);
     }
 
+    /**
+     * Get base meta title attribute.
+     * 
+     * @return string
+     */
     public function getBaseMetaTitleAttribute()
     {
         return $this->attributes[ 'meta_title' ];
     }
 
+    /**
+     * Get file path by id.
+     * 
+     * @param int $id Post id.
+     * 
+     * @return string
+     */
     public static function getFilePath($id)
     {
         return strtr(self::FILE_PATH, [
@@ -184,7 +227,7 @@ class Post extends Model
     /**
      * Post tags.
      *
-     * @return
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function tags()
     {
@@ -194,7 +237,7 @@ class Post extends Model
     /**
      * Post tags.
      *
-     * @return
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function postTag()
     {
@@ -204,7 +247,7 @@ class Post extends Model
     /**
      * Post categories.
      *
-     * @return
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function categories()
     {
@@ -214,7 +257,7 @@ class Post extends Model
     /**
      * Post comments.
      *
-     * @return
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function comments()
     {

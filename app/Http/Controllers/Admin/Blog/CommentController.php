@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Blog\Comment\UpdateRequest;
 use App\Services\Admin\Blog\CommentService;
 use App\Repositories\Eloquent\Blog\CommentRepository;
+use App\Models\Blog\Comment;
 
 class CommentController extends Controller
 {
@@ -16,14 +17,14 @@ class CommentController extends Controller
      * 
      * @access protected
      * 
-     * @var \App\Services\Admin\Blog\CommentService $commentService.
+     * @var App\Services\Admin\Blog\CommentService $commentService.
      */
     protected $commentService;
 
     /**
      * Constructor.
      * 
-     * @param \App\Services\Admin\Blog\CommentService $commentService Blog service class.
+     * @param App\Services\Admin\Blog\CommentService $commentService Blog service class.
      * 
      * @return void
      */
@@ -37,7 +38,7 @@ class CommentController extends Controller
      *
      * @param Illuminate\Http\Request $request Request.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function index(Request $request)
     {
@@ -47,8 +48,8 @@ class CommentController extends Controller
     /**
      * Get datatable post comments.
      *
-     * @param Illuminate\Http\Request                           $request     Request.
-     * @param \App\Repositories\Eloquent\Blog\CommentRepository $commentRepo Blog comment repository.
+     * @param Illuminate\Http\Request                          $request     Request.
+     * @param App\Repositories\Eloquent\Blog\CommentRepository $commentRepo Blog comment repository.
      * 
      * @return null|string JSON.
      */
@@ -70,9 +71,9 @@ class CommentController extends Controller
      * Display blog comment edit form.
      *
      * @param Illuminate\Http\Request  $request Request object.
-     * @param \App\Models\Blog\Comment $comment Comment model.
+     * @param App\Models\Blog\Comment $comment Comment model.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function edit(Request $request, Comment $comment)
     {
@@ -82,10 +83,10 @@ class CommentController extends Controller
      /**
      * Update blog comment.
      *
-     * @param \App\Http\Requests\Admin\Blog\Comment\UpdateRequest $request Request object.
-     * @param \App\Models\Blog\Comment                            $comment Comment model.
+     * @param App\Http\Requests\Admin\Blog\Comment\UpdateRequest $request Request object.
+     * @param App\Models\Blog\Comment                            $comment Comment model.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function update(UpdateRequest $request, Comment $comment)
     {
@@ -97,10 +98,10 @@ class CommentController extends Controller
     /**
      * Delete post comment.
      *
-     * @param Illuminate\Http\Request  $request Request object.
-     * @param \App\Models\Blog\Comment $comment Comment model.
+     * @param Illuminate\Http\Request $request Request object.
+     * @param App\Models\Blog\Comment $comment Comment model.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function delete(Request $request, Comment $comment)
     {

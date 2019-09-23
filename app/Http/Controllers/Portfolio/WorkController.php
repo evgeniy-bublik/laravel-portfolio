@@ -20,14 +20,14 @@ class WorkController extends Controller
      *
      * @access private
      * 
-     * @var \App\Services\PortfolioService $portfolioService.
+     * @var App\Services\PortfolioService $portfolioService.
      */
     private $portfolioService;
 
     /**
      * {@inheritdoc}
      *
-     * @param \App\Services\PortfolioService $portfolioService $portfolioService Portfolio service.
+     * @param App\Services\PortfolioService $portfolioService $portfolioService Portfolio service.
      * 
      * @return void
      */
@@ -39,12 +39,12 @@ class WorkController extends Controller
     /**
      * Display index page.
      *
-     * @param Illuminate\Http\Request                                 $request      Request object.
-     * @param \App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
-     * @param \App\Repositories\Eloquent\Portfolio\WorkRepository     $workRepo     Portfolio work repository.
-     * @param \App\Repositories\Eloquent\Core\PageRepository          $pageRepo     Core page repository.
+     * @param Illuminate\Http\Request                                $request      Request object.
+     * @param App\Repositories\Eloquent\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
+     * @param App\Repositories\Eloquent\Portfolio\WorkRepository     $workRepo     Portfolio work repository.
+     * @param App\Repositories\Eloquent\Core\PageRepository          $pageRepo     Core page repository.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function index(
         Request $request,
@@ -65,11 +65,11 @@ class WorkController extends Controller
     /**
      * Display item portfolio work.
      *
-     * @param Illuminate\Http\Request                             $request  Request object.
-     * @param \App\Repositories\Eloquent\Portfolio\WorkRepository $workRepo Portfolio work repository.
-     * @param string                                              $itemSlug Portfolio work slug.
+     * @param Illuminate\Http\Request                            $request  Request object.
+     * @param App\Repositories\Eloquent\Portfolio\WorkRepository $workRepo Portfolio work repository.
+     * @param string                                             $itemSlug Portfolio work slug.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function portfolioWork(Request $request, WorkRepository $workRepo, $itemSlug)
     {

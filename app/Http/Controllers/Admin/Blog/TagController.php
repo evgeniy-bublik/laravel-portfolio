@@ -38,7 +38,7 @@ class TagController extends Controller
      *
      * @param Illuminate\Http\Request $request Request object.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function index(Request $request)
     {
@@ -72,7 +72,7 @@ class TagController extends Controller
      *
      * @param Illuminate\Http\Request $request Request object.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function create(Request $request)
     {
@@ -85,7 +85,7 @@ class TagController extends Controller
      * @param \App\Http\Requests\Admin\Blog\Tag\CreateRequest $request Form request.
      * @param \App\Repositories\Eloquent\Blog\TagRepository   $tagRepo Blog tag repository.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function store(CreateRequest $request, TagRepository $tagRepo)
     {
@@ -102,7 +102,7 @@ class TagController extends Controller
      * @param Illuminate\Http\Request $request Request object.
      * @param \App\Models\Blog\Tag    $tag     Blog tag model.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function edit(Request $request, Tag $tag)
     {
@@ -115,7 +115,7 @@ class TagController extends Controller
      * @param \App\Http\Requests\Admin\Blog\Tag\UpdateRequest $request Form request.
      * @param \App\Models\Blog\Tag                            $tag     Blog tag model.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function update(UpdateRequest $request, Tag $tag)
     {
@@ -132,7 +132,7 @@ class TagController extends Controller
      * @param Illuminate\Http\Request  $request Request object.
      * @param \App\Models\Blog\Tag     $tag     Blog tag model.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function delete(Request $request, Tag $tag)
     {

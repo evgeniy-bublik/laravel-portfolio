@@ -14,7 +14,7 @@ class Comment extends Model
     /**
      * {@inheritdoc}
      *
-     * @var strin $table
+     * @var string $table
      */
     protected $table = 'post_comments';
 
@@ -36,7 +36,7 @@ class Comment extends Model
      *
      * @param Illuminate\Database\Eloquent\Builder $builder
      * 
-     * @return Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive(Builder $builder)
     {

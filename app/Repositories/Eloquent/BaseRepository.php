@@ -19,6 +19,7 @@ abstract class BaseRepository
      * Constructor.
      * 
      * @throws \Exception If model class didn't extend Illuminate\Database\Eloquent\Model.
+     * 
      * @return void
      */
     public function __construct()
@@ -36,8 +37,6 @@ abstract class BaseRepository
      * Get model class.
      * 
      * @abstract
-     * 
-     * @return
      */    
     abstract public function getModelClass();
 
@@ -46,7 +45,7 @@ abstract class BaseRepository
      * 
      * @param mixed $pk Primary key
      * 
-     * @return Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function findByPkOrFail($pk)
     {
@@ -59,7 +58,7 @@ abstract class BaseRepository
      * @param string $columm Column name.
      * @param string $value  Value.
      * 
-     * @return Illuminate\Database\Eloquent\Model|null
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function findWhereFirst($columm, $value)
     {
@@ -72,7 +71,7 @@ abstract class BaseRepository
      * @param string $columm Column name.
      * @param string $value  Value.
      * 
-     * @return Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function findWhereFirstOrFail($columm, $value)
     {
@@ -84,7 +83,7 @@ abstract class BaseRepository
      * 
      * @param int $pagination Count model on page.
      * 
-     * @return
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function pagination($pagination = 20)
     {
@@ -94,7 +93,7 @@ abstract class BaseRepository
     /**
      * Model collection.
      * 
-     * @return
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function collection()
     {
@@ -104,7 +103,7 @@ abstract class BaseRepository
     /**
      * All models.
      * 
-     * @return Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model[]
      */
     public function all()
     {
@@ -127,7 +126,7 @@ abstract class BaseRepository
      * @param string $column Column name.
      * @param array  $list   Search array data.
      * 
-     * @return
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function whereInCollection($column, $list)
     {
@@ -139,7 +138,7 @@ abstract class BaseRepository
      * 
      * @param array $fields Model fields.
      * 
-     * @return Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function create($fields)
     {
@@ -154,15 +153,13 @@ abstract class BaseRepository
      */
     public function update($pk, $fields)
     {
-        $this->model = $this->findByPkOrFail($pk);
-
         return $this->model->update($fields);
     }
 
     /**
      * Get model object.
      * 
-     * @return Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function getModel()
     {

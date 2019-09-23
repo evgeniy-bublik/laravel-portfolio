@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Portfolio;
+namespace App\Http\Requests\Admin\Portfolio\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryStoreRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

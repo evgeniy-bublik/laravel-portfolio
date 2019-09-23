@@ -21,14 +21,14 @@ class PostController extends Controller
      * 
      * @access protected
      * 
-     * @var \App\Services\Admin\Blog\PostService $postService
+     * @var App\Services\Admin\Blog\PostService $postService
      */
     protected $postService;
 
     /**
      * Constructor.
      * 
-     * @param \App\Services\Admin\Blog\PostService $postService Blog service class.
+     * @param App\Services\Admin\Blog\PostService $postService Blog service class.
      * 
      * @return void
      */
@@ -42,7 +42,7 @@ class PostController extends Controller
      *
      * @param Illuminate\Http\Request $request Request object.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function index(Request $request)
     {
@@ -53,7 +53,7 @@ class PostController extends Controller
      * Get datatable data posts.
      *
      * @param Illuminate\Http\Request                        $request  Request object.
-     * @param \App\Repositories\Eloquent\Blog\PostRepository $postRepo Blog post repository.
+     * @param App\Repositories\Eloquent\Blog\PostRepository $postRepo Blog post repository.
      * 
      * @return null|string JSON.
      */
@@ -74,11 +74,11 @@ class PostController extends Controller
     /**
      * Display blog post create form.
      *
-     * @param Illuminate\Http\Request                            $request      Request object.
-     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Blog category repository.
-     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Blog tag repository.
+     * @param Illuminate\Http\Request                           $request      Request object.
+     * @param App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Blog category repository.
+     * @param App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Blog tag repository.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function create(Request $request, CategoryRepository $categoryRepo, TagRepository $tagRepo)
     {
@@ -91,11 +91,11 @@ class PostController extends Controller
     /**
      * Create new blog post.
      *
-     * @param \App\Http\Requests\Admin\Blog\Post\CreateRequest $request  Form request.
-     * @param \App\Repositories\Eloquent\Blog\PostRepository   $postRepo Blog post repository.
-     * @param \App\Repositories\Eloquent\Blog\TagRepository    $tagRepo  Blog tag repository.
+     * @param App\Http\Requests\Admin\Blog\Post\CreateRequest $request  Form request.
+     * @param App\Repositories\Eloquent\Blog\PostRepository   $postRepo Blog post repository.
+     * @param App\Repositories\Eloquent\Blog\TagRepository    $tagRepo  Blog tag repository.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function store(CreateRequest $request, PostRepository $postRepo, TagRepository $tagRepo)
     {
@@ -120,12 +120,12 @@ class PostController extends Controller
     /**
      * Display blog post edit form.
      *
-     * @param Illuminate\Http\Request                            $request      Request object.
-     * @param \App\Models\Blog\Post                              $post         Blog post model.
-     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Blog category repository.
-     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Blog tag repository.
+     * @param Illuminate\Http\Request                           $request      Request object.
+     * @param App\Models\Blog\Post                              $post         Blog post model.
+     * @param App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Blog category repository.
+     * @param App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Blog tag repository.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function edit(Request $request, Post $post, CategoryRepository $categoryRepo, TagRepository $tagRepo)
     {
@@ -139,11 +139,11 @@ class PostController extends Controller
     /**
      * Update blog post.
      *
-     * @param \App\Http\Requests\Admin\Blog\Post\UpdateRequest $request Form request.
-     * @param \App\Models\Blog\Post                            $post    Blog post model.
-     * @param \App\Repositories\Eloquent\Blog\TagRepository    $tagRepo Blog tag repository.
+     * @param App\Http\Requests\Admin\Blog\Post\UpdateRequest $request Form request.
+     * @param App\Models\Blog\Post                            $post    Blog post model.
+     * @param App\Repositories\Eloquent\Blog\TagRepository    $tagRepo Blog tag repository.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function update(UpdateRequest $request, Post $post, TagRepository $tagRepo)
     {
@@ -170,9 +170,9 @@ class PostController extends Controller
      * Delete blog post.
      *
      * @param Illuminate\Http\Request $request Request object.
-     * @param \App\Models\Blog\Post   $post    Blog post model.
+     * @param App\Models\Blog\Post    $post    Blog post model.
      * 
-     * @return Illuminate\Support\Facades\Redirect
+     * @return \Illuminate\Support\Facades\Redirect
      */
     public function delete(Request $request, Post $post)
     {

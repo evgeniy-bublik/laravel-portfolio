@@ -6,7 +6,7 @@ use DataTables;
 use App\Models\Portfolio\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Portfolio\CategoryStoreRequest;
+use App\Http\Requests\Admin\Portfolio\Category\StoreRequest;
 use App\Services\Admin\Portfolio\CategoryService;
 use App\Repositories\Eloquent\Portfolio\CategoryRepository;
 
@@ -20,14 +20,14 @@ class CategoryController extends Controller
      * 
      * @access protected
      * 
-     * @var \App\Services\Admin\Portfolio\CategoryService $categoryService.
+     * @var App\Services\Admin\Portfolio\CategoryService $categoryService.
      */
     protected $categoryService;
 
     /**
      * Constructor.
      * 
-     * @param \App\Services\Admin\Portfolio\CategoryService $categoryService Admin portfolio category service.
+     * @param App\Services\Admin\Portfolio\CategoryService $categoryService Admin portfolio category service.
      * 
      * @return void
      */
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     /**
      * Display portfolio categories page.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param Illuminate\Http\Request $request Request.
      * 
      * @return \Illuminate\Support\Facades\View
      */
@@ -51,8 +51,8 @@ class CategoryController extends Controller
     /**
      * Get datatable data categories.
      *
-     * @param \Illuminate\Http\Request                       $request      Request object.
-     * @param \App\Repositories\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
+     * @param Illuminate\Http\Request                       $request      Request object.
+     * @param App\Repositories\Portfolio\CategoryRepository $categoryRepo Portfolio category repository.
      * 
      * @return null|string JSON.
      */
@@ -73,7 +73,7 @@ class CategoryController extends Controller
     /**
      * Display portfolio category create form.
      *
-     * @param \Illuminate\Http\Request $request Request object.
+     * @param Illuminate\Http\Request $request Request object.
      * 
      * @return \Illuminate\Support\Facades\View
      */
@@ -85,12 +85,12 @@ class CategoryController extends Controller
     /**
      * Create new portfolio category.
      *
-     * @param \App\Http\Requests\Admin\Portfolio\CategoryStoreRequest $request      Form request.
-     * @param \App\Repositories\Portfolio\CategoryRepository          $categoryRepo Portfolio category repository.
+     * @param App\Http\Requests\Admin\Portfolio\Category\StoreRequest $request      Form request.
+     * @param App\Repositories\Portfolio\CategoryRepository           $categoryRepo Portfolio category repository.
      * 
      * @return \Illuminate\Support\Facades\Redirect
      */
-    public function store(CategoryStoreRequest $request, CategoryRepository $categoryRepo)
+    public function store(StoreRequest $request, CategoryRepository $categoryRepo)
     {
         $categoryData = $this->categoryService->getStoreDataFromRequest($request);
 
@@ -102,8 +102,8 @@ class CategoryController extends Controller
     /**
      * Display portfolio category edit form.
      *
-     * @param \Illuminate\Http\Request       $request  Request object.
-     * @param \App\Models\Portfolio\Category $category Portfolio category model.
+     * @param Illuminate\Http\Request       $request  Request object.
+     * @param App\Models\Portfolio\Category $category Portfolio category model.
      * 
      * @return \Illuminate\Support\Facades\View
      */
@@ -115,12 +115,12 @@ class CategoryController extends Controller
     /**
      * Update portfolio category.
      *
-     * @param \App\Http\Requests\CategoryStoreRequest $request  Form request.
-     * @param \App\Models\Portfolio\Category          $category Portfolio category model.
+     * @param App\Http\Requests\Admin\Portfolio\Category\StoreRequest $request  Form request.
+     * @param App\Models\Portfolio\Category                           $category Portfolio category model.
      * 
      * @return \Illuminate\Support\Facades\Redirect
      */
-    public function update(CategoryStoreRequest $request, Category $category)
+    public function update(StoreRequest $request, Category $category)
     {
         $categoryData = $this->categoryService->getStoreDataFromRequest($request);
 
@@ -132,8 +132,8 @@ class CategoryController extends Controller
     /**
      * Delete portfolio category.
      *
-     * @param \Illuminate\Http\Request       $request  Request object.
-     * @param \App\Models\Portfolio\Category $category Portfolio category model.
+     * @param Illuminate\Http\Request       $request  Request object.
+     * @param App\Models\Portfolio\Category $category Portfolio category model.
      * 
      * @return \Illuminate\Support\Facades\Redirect
      */

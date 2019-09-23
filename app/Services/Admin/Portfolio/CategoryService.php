@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Portfolio;
 
-use App\Http\Requests\Admin\Portfolio\CategoryStoreRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Admin portfolio category service class.
@@ -12,11 +12,11 @@ class CategoryService
     /**
      * Get store data for portfolio category model from request.
      * 
-     * @param \App\Http\Requests\Admin\Portfolio\CategoryStoreRequest $request Request object.
+     * @param Illuminate\Foundation\Http\FormRequest $request Form request.
      * 
      * @return array
      */
-    public function getStoreDataFromRequest(CategoryStoreRequest $request)
+    public function getStoreDataFromRequest(FormRequest $request)
     {
         $request->merge(['active' => ($request->active) ? 1 : 0]);
 

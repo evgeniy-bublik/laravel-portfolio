@@ -22,7 +22,7 @@ class PostController extends Controller
      *
      * @access private
      * 
-     * @var \App\Services\PostService $postService
+     * @var App\Services\PostService $postService
      */
     private $postService;
 
@@ -39,13 +39,13 @@ class PostController extends Controller
     /**
      * Display page with all posts.
      *
-     * @param Illuminate\Http\Request                            $request      Request object.
-     * @param \App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
-     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
-     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Post tag repository.
-     * @param \App\Repositories\Eloquent\Core\PageRepository     $pageRepo     Core page repository.
+     * @param Illuminate\Http\Request                           $request      Request object.
+     * @param App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
+     * @param App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
+     * @param App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Post tag repository.
+     * @param App\Repositories\Eloquent\Core\PageRepository     $pageRepo     Core page repository.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function index(
         Request $request,
@@ -70,12 +70,12 @@ class PostController extends Controller
     /**
      * Display page single post.
      *
-     * @param Illuminate\Http\Request                            $request      Request object.
-     * @param \App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
-     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
-     * @param string                                             $slug         Post slug.
+     * @param Illuminate\Http\Request                           $request      Request object.
+     * @param App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
+     * @param App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
+     * @param string                                            $slug         Post slug.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function item(
         Request $request,
@@ -108,13 +108,13 @@ class PostController extends Controller
     /**
      * Display page with posts by category.
      *
-     * @param Illuminate\Http\Request                            $request      Request object.
-     * @param \App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
-     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
-     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Post tag repository.
-     * @param string                                             $categorySlug Category slug.
+     * @param Illuminate\Http\Request                           $request      Request object.
+     * @param App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
+     * @param App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
+     * @param App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Post tag repository.
+     * @param string                                            $categorySlug Category slug.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function byCategory(
         Request $request,
@@ -139,13 +139,13 @@ class PostController extends Controller
     /**
      * Display page with posts by tag.
      *
-     * @param Illuminate\Http\Request                            $request      Request object.
-     * @param \App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
-     * @param \App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
-     * @param \App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Post tag repository.
-     * @param string                                             $tagSlug      Tag slug.
+     * @param Illuminate\Http\Request                           $request      Request object.
+     * @param App\Repositories\Eloquent\Blog\PostRepository     $postRepo     Post repository.
+     * @param App\Repositories\Eloquent\Blog\CategoryRepository $categoryRepo Post category repository.
+     * @param App\Repositories\Eloquent\Blog\TagRepository      $tagRepo      Post tag repository.
+     * @param string                                            $tagSlug      Tag slug.
      * 
-     * @return Illuminate\Support\Facades\View
+     * @return \Illuminate\Support\Facades\View
      */
     public function byTag(
         Request $request,
@@ -170,10 +170,10 @@ class PostController extends Controller
     /**
      * Add comment to post.
      * 
-     * @param App\Http\Requests\AddCommentRequest               $request     Form request.
-     * @param \App\Repositories\Eloquent\Blog\PostRepository    $postRepo    Post repository.
-     * @param \App\Repositories\Eloquent\Blog\CommentRepository $commentRepo Post comment repository.
-     * @param int                                               $postId      Post id.
+     * @param App\Http\Requests\AddCommentRequest              $request     Form request.
+     * @param App\Repositories\Eloquent\Blog\PostRepository    $postRepo    Post repository.
+     * @param App\Repositories\Eloquent\Blog\CommentRepository $commentRepo Post comment repository.
+     * @param int                                              $postId      Post id.
      * 
      * @return string JSON string
      */
