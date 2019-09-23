@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Admin\AboutMeService;
+use App\Services\Admin\User\AboutMeService;
 use App\Repositories\Eloquent\User\AboutMeRepository;
 
 /**
@@ -17,14 +17,14 @@ class AboutMeController extends Controller
      * 
      * @access protected
      * 
-     * @var App\Services\Admin\AboutMeService $aboutMeService
+     * @var App\Services\Admin\User\AboutMeService $aboutMeService
      */
     protected $aboutMeService;
 
     /**
      * Constructor.
      * 
-     * @param App\Services\AboutMeService $aboutMeService Admin service class.
+     * @param App\Services\Admin\User\AboutMeService $aboutMeService Admin service class.
      * 
      * @return void
      */

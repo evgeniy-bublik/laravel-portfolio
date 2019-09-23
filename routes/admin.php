@@ -6,10 +6,10 @@ Route::post('/admin/login', 'Auth\LoginController@login');
 Route::group(['prefix' => '/admin', 'middleware' => 'auth'], function() {
 
     Route::get('/', 'Admin\IndexController@index')->name('admin.index');
-    Route::get('/about/me', 'Admin\AboutMeController@edit')->name('admin.about.me.edit');
+    Route::get('/about-me', 'Admin\User\AboutMeController@edit')->name('admin.about.me.edit');
 
     Route::group(['prefix' => '/ajax'], function() {
-        Route::put('/save-about-me', 'Admin\AboutMeController@update')->name('admin.ajax.save.about.me');
+        Route::put('/save-about-me', 'Admin\User\AboutMeController@update')->name('admin.ajax.save.about.me');
     });
 
     Route::group(['prefix' => '/pages'], function() {
