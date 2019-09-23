@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Admin\Blog;
 use DataTables;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Blog\Comment;
-use App\Models\Blog\Post;
-use App\Http\Requests\AdminCommentUpdateRequest;
-use App\Services\BlogService;
-use Freshbitsweb\Laratables\Laratables;
+use App\Http\Requests\Admin\Blog\Comment\UpdateRequest;
+use App\Services\Admin\Blog\CommentService;
+use App\Repositories\Eloquent\Blog\CommentRepository;
 
 class CommentController extends Controller
 {
@@ -18,27 +16,28 @@ class CommentController extends Controller
      * 
      * @access protected
      * 
-     * @var App\Services\BlogService $blogService
+     * @var \App\Services\Admin\Blog\CommentService $commentService.
      */
-    protected $blogService;
+    protected $commentService;
 
     /**
      * Constructor.
      * 
-     * @param App\Services\BlogService $blogService Blog service class.
+     * @param \App\Services\Admin\Blog\CommentService $commentService Blog service class.
      * 
      * @return void
      */
-    public function __construct(BlogService $blogService)
+    public function __construct(CommentService $commentService)
     {
-        $this->blogService = $blogService;
+        $this->commentService = $commentService;
     }
 
     /**
      * Display post comments.
      *
-     * @param \Illuminate\Http\Request $request Request.
-     * @return \Illuminate\Support\Facades\View
+     * @param Illuminate\Http\Request $request Request.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
     public function index(Request $request)
     {
@@ -48,31 +47,32 @@ class CommentController extends Controller
     /**
      * Get datatable post comments.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param Illuminate\Http\Request                           $request     Request.
+     * @param \App\Repositories\Eloquent\Blog\CommentRepository $commentRepo Blog comment repository.
+     * 
      * @return null|string JSON.
      */
-    public function getDataTable(Request $request)
+    public function getDataTable(Request $request, CommentRepository $commentRepo)
     {       
         if (!$request->ajax()) {
             return null;
         }
 
-        $model = Comment::with('post');
+        $model = $commentRepo->getModel()->with('post');
 
         return DataTables::eloquent($model)
             ->addColumn('actions', 'admin.blog.comment.datatable_actions_column')
             ->rawColumns(['actions'])
             ->toJson();
-
-        return Laratables::recordsOf(Comment::class);
     }
 
     /**
      * Display blog comment edit form.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param Illuminate\Http\Request  $request Request object.
      * @param \App\Models\Blog\Comment $comment Comment model.
-     * @return \Illuminate\Support\Facades\View
+     * 
+     * @return Illuminate\Support\Facades\View
      */
     public function edit(Request $request, Comment $comment)
     {
@@ -82,16 +82,14 @@ class CommentController extends Controller
      /**
      * Update blog comment.
      *
-     * @param \App\Http\Requests\AdminCommentUpdateRequest $request Request.
-     * @param \App\Models\Blog\Comment $comment Comment model.
-     * @return \Illuminate\Support\Facades\View
+     * @param \App\Http\Requests\Admin\Blog\Comment\UpdateRequest $request Request object.
+     * @param \App\Models\Blog\Comment                            $comment Comment model.
+     * 
+     * @return Illuminate\Support\Facades\View
      */
-    public function update(AdminCommentUpdateRequest $request, Comment $comment)
+    public function update(UpdateRequest $request, Comment $comment)
     {
-        $this->blogService->updateBlogComment($comment, $request->only([
-            'text',
-            'active',
-        ]));
+        $comment->update($this->commentService->getStoreDataFromRequest($request));
 
         return redirect()->route('admin.blog.comments.index');
     }
@@ -99,9 +97,10 @@ class CommentController extends Controller
     /**
      * Delete post comment.
      *
-     * @param \Illuminate\Http\Request $request Request.
+     * @param Illuminate\Http\Request  $request Request object.
      * @param \App\Models\Blog\Comment $comment Comment model.
-     * @return \Illuminate\Support\Facades\Redirect
+     * 
+     * @return Illuminate\Support\Facades\Redirect
      */
     public function delete(Request $request, Comment $comment)
     {
