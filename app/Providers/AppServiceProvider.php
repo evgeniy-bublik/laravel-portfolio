@@ -3,13 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
-use App\Models\User\AboutMe;
-use App\Models\User\SocialLink;
-use App\Models\Blog\Post;
-use App\Models\Portfolio\Work;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,23 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $oneDayMinutes = 60 * 24;
-
-        View::share('aboutMe', Cache::remember('about-me', $oneDayMinutes, function () {
-            return AboutMe::get()->pluck('value', 'key');
-        }));
-
-        View::share('socialLinks', Cache::remember('social-links', $oneDayMinutes, function () {
-            return SocialLink::active()->get();
-        }));
-
-        View::share('latestPosts', Cache::remember('latest-posts', $oneDayMinutes, function () {
-            return Post::latestPosts()->get();
-        }));
-
-        View::share('latestWorks', Cache::remember('latest-works', $oneDayMinutes, function () {
-            return Work::latestWorks()->get();
-        }));
+        //
     }
 
     /**
