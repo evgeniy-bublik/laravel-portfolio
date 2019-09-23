@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User\AboutMe;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\AdminService;
+use App\Services\Admin\AboutMeService;
+use App\Repositories\Eloquent\User\AboutMeRepository;
 
 /**
  * Admin about me controller.
@@ -17,44 +17,46 @@ class AboutMeController extends Controller
      * 
      * @access protected
      * 
-     * @var App\Services\AdminService $adminService
+     * @var App\Services\Admin\AboutMeService $aboutMeService
      */
-    protected $adminService;
+    protected $aboutMeService;
 
     /**
      * Constructor.
      * 
-     * @param App\Services\AdminService $adminService Admin service class.
+     * @param App\Services\AboutMeService $aboutMeService Admin service class.
      * 
      * @return void
      */
-    public function __construct(AdminService $adminService)
+    public function __construct(AboutMeService $aboutMeService)
     {
-        $this->adminService = $adminService;
+        $this->aboutMeService = $aboutMeService;
     }
 
     /**
      * Display index page.
      *
-     * @param \Illuminate\Http\Request $request Request
+     * @param Illuminate\Http\Request $request Request object.
+     * 
      * @return \Illuminate\Support\Facades\View
      */
-    public function edit(Request $request)
+    public function edit(Request $request, AboutMeRepository $aboutMeRepo)
     {
-        $aboutMe = $this->adminService->getAboutMeInformations();
+        $aboutMeCollection = $aboutMeRepo->collection();
 
-        return view('admin.about.edit', compact('aboutMe'));
+        return view('admin.about.edit', compact('aboutMeCollection'));
     }
 
     /**
      * Update information about me.
      *
-     * @param \Illuminate\Http\Request $request Request
+     * @param Illuminate\Http\Request $request Request object.
+     * 
      * @return string JSON response.
      */
-    public function update(Request $request)
+    public function update(Request $request, AboutMeRepository $aboutMeRepo)
     {
-        $model = $this->adminService->getAboutMeInformationByKey($request->name);
+        $model = $aboutMeRepo->getModelByKey($request->name);
 
         if (!$model) {
             return response()->json([
@@ -62,8 +64,10 @@ class AboutMeController extends Controller
             ]);
         }
 
+        $model->value = $this->aboutMeService->getModifyValueByKey($request->name, $request->value);
+
         return response()->json([
-            'status' => $this->adminService->updateAboutMeInformation($model, $request->name, $request->value),
+            'status' => $model->save(),
         ]);
     }
 }

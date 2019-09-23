@@ -13,51 +13,6 @@ use App\Models\User\SocialLink;
 class AdminService
 {
     /**
-     * Get list information about me.
-     * 
-     * @return
-     */
-    public function getAboutMeInformations()
-    {
-        return AboutMe::get();
-    }
-
-    /**
-     * Get information about me by key.
-     * 
-     * @param strint $key Key about me.
-     * 
-     * @return App\Models\User\AboutMe
-     */
-    public function getAboutMeInformationByKey($key)
-    {
-        return AboutMe::where('key', $key)->first();
-    }
-
-    /**
-     * Update about me information.
-     * 
-     * @param App\Models\User\AboutMe $aboutMe About me model.
-     * @param string $key Key about me.
-     * @param string $value Value about me.
-     * 
-     * @return bool
-     */
-    public function updateAboutMeInformation(AboutMe $aboutMe, $key, $value)
-    {
-        switch ($key) {
-            case AboutMe::KEY_EMAILS:
-            case AboutMe::KEY_PHONES:
-                $value = json_encode(explode(',', $value));
-                break;
-            default:
-                break;
-        }
-
-        return $aboutMe->update(['value' => $value]);
-    }
-
-    /**
      * Update site core page meta information.
      * 
      * @param App\Models\SiteCorePage $page Site core page model.

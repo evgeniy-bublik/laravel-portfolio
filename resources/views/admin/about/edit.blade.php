@@ -34,7 +34,7 @@
                                     <table style="clear: both" class="table table-bordered table-striped" id="user_2">
                                         <tbody>
 
-                                            @foreach ($aboutMe as $elementAboutMe)
+                                            @foreach ($aboutMeCollection as $elementAboutMe)
 
                                                 <tr>
                                                     <td style="width:35%">{{ $elementAboutMe->humanTitleByKey }}</td>
