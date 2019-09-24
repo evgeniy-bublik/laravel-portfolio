@@ -22,7 +22,7 @@
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="{{ route('admin.index') }}">Главная</a></li>
-                    <li><a href="{{ route('admin.professional.skills.index') }}"><span>Профессиональные навыки</span></a></li>
+                    <li><a href="{{ route('admin.professional_skills.index') }}"><span>Профессиональные навыки</span></a></li>
                     <li class="active"><span>Добавление навыка</span></li>
                 </ol>
             </div>
@@ -42,7 +42,7 @@
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body">
                             <div class="form-wrap">
-                                <form method="post" action="{{ route('admin.professional.skills.store') }}">
+                                <form method="post" action="{{ route('admin.professional_skills.store') }}">
                                     @csrf
 
                                     <div class="{{ ($errors->first('name')) ? 'form-group has-error has-feedback' : 'form-group' }}">

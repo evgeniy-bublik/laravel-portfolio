@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminPageUpdateRequest extends FormRequest
+class ProfessionalSkillRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class AdminPageUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'meta_title' => 'string|max:255|nullable',
-            'meta_description' => 'string|max:255|nullable',
-            'meta_keywords' => 'string|max:255|nullable',
+            'name'          => 'required|string|max:100',
+            'value'         => 'required|integer|min:0|max:100',
+            'color_bar'     => 'required|string|max:7',
+            'display_order' => 'integer|min:0',
         ];
     }
 }

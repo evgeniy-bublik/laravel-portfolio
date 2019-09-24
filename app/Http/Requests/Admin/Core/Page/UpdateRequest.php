@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Core\Page;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminSocialLinkRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class AdminSocialLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'link' => 'required|url|string|max:255',
-            'additional_classes' => 'string|max:255|nullable',
-            'display_order' => 'integer|min:0',
+            'meta_title'       => 'string|max:255|nullable',
+            'meta_description' => 'string|max:255|nullable',
+            'meta_keywords'    => 'string|max:255|nullable',
         ];
     }
 }

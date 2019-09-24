@@ -12,7 +12,7 @@
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="{{ route('admin.index') }}">Главная</a></li>
-                    <li><a href="{{ route('admin.social.links.index') }}"><span>Социальные ссылки</span></a></li>
+                    <li><a href="{{ route('admin.social_links.index') }}"><span>Социальные ссылки</span></a></li>
                     <li class="active"><span>Редактирование социальной ссылки</span></li>
                 </ol>
             </div>
@@ -32,7 +32,7 @@
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body">
                             <div class="form-wrap">
-                                <form method="post" action="{{ route('admin.social.links.update', compact('socialLink')) }}">
+                                <form method="post" action="{{ route('admin.social_links.update', compact('socialLink')) }}">
                                     @csrf
                                     {{ method_field('PUT') }}
 

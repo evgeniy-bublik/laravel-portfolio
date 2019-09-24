@@ -54,13 +54,13 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.social.links.index') }}">
+            <a href="{{ route('admin.social_links.index') }}">
                 <div class="pull-left"><i class="zmdi zmdi-flag mr-20"></i><span class="right-nav-text">Социальные ссылки</span></div>
                 <div class="clearfix"></div>
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.professional.skills.index') }}">
+            <a href="{{ route('admin.professional_skills.index') }}">
                 <div class="pull-left"><i class="zmdi zmdi-flag mr-20"></i><span class="right-nav-text">Проф. навыки</span></div>
                 <div class="clearfix"></div>
             </a>

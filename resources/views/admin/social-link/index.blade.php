@@ -34,7 +34,7 @@
                             <h6 class="panel-title txt-dark">Социальные ссылки</h6>
                         </div>
                         <div class="pull-right">
-                            <a class="btn btn-success" href="{{ route('admin.social.links.create') }}">Создать</a>
+                            <a class="btn btn-success" href="{{ route('admin.social_links.create') }}">Создать</a>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="panel-body">
                             <div class="table-wrap">
                                 <div class="table-responsive">
-                                    <table id="data-table-social-links" class="table table-hover table-bordered display mb-30" data-ajax-url="{{ route('admin.social.links.ajaxdata') }}">
+                                    <table id="data-table-social-links" class="table table-hover table-bordered display mb-30" data-ajax-url="{{ route('admin.social_links.ajaxdata') }}">
                                         <thead>
                                             <tr>
                                                 <th>Ссылка</th>

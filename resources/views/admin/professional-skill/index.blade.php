@@ -34,7 +34,7 @@
                             <h6 class="panel-title txt-dark">Профессиональные навыки</h6>
                         </div>
                         <div class="pull-right">
-                            <a class="btn btn-success" href="{{ route('admin.professional.skills.create') }}">Создать</a>
+                            <a class="btn btn-success" href="{{ route('admin.professional_skills.create') }}">Создать</a>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="panel-body">
                             <div class="table-wrap">
                                 <div class="table-responsive">
-                                    <table id="data-table-professional-skills" class="table table-hover table-bordered display mb-30" data-ajax-url="{{ route('admin.professional.skills.ajaxdata') }}">
+                                    <table id="data-table-professional-skills" class="table table-hover table-bordered display mb-30" data-ajax-url="{{ route('admin.professional_skills.ajaxdata') }}">
                                         <thead>
                                             <tr>
                                                 <th>Навык</th>
